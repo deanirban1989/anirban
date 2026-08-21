@@ -1,0 +1,23 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "A single-page portfolio site built with plain HTML, CSS, and JavaScript (no build step required).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deanirban1989/anirban.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deanirban1989/anirban/issues"
+  },
+  "homepage": "https://github.com/deanirban1989/anirban#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
