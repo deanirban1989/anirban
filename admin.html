@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Edit Content — Anirban De</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05070d; --surface:#0d111c; --border:rgba(255,255,255,0.1);
+    --text:#eef1f7; --text-dim:#9aa3b8; --accent:#35e0c0; --accent-2:#6ea8fe;
+    --danger:#ff6b6b;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"Inter",system-ui,sans-serif; line-height:1.5;
+    padding: 32px 20px 120px;
+  }
+  h1{ font-family:"Space Grotesk",sans-serif; font-size:1.6rem; margin:0 0 6px; }
+  .sub{ color:var(--text-dim); margin:0 0 32px; font-size:0.92rem; }
+  .wrap{ max-width: 760px; margin: 0 auto; }
+  .gate{ max-width: 360px; margin: 15vh auto; text-align:center; }
+  .gate input{ width:100%; margin-top:16px; }
+  fieldset{
+    border:1px solid var(--border); border-radius:14px; padding:20px;
+    margin-bottom:24px; background:var(--surface);
+  }
+  legend{ font-family:"Space Grotesk",sans-serif; font-weight:600; padding:0 8px; color:var(--accent); }
+  label{ display:block; font-size:0.8rem; color:var(--text-dim); margin:14px 0 6px; }
+  label:first-child{ margin-top:0; }
+  input[type=text], input[type=email], input[type=url], input[type=number], input[type=password], textarea{
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border);
+    background:#0a0d16; color:var(--text); font-family:inherit; font-size:0.92rem;
+  }
+  textarea{ min-height: 90px; resize: vertical; }
+  .row{ display:flex; gap:12px; }
+  .row > div{ flex:1; }
+  .item-block{
+    border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px;
+    background:rgba(255,255,255,0.02);
+  }
+  .item-block-head{ display:flex; justify-content:space-between; align-items:center; }
+  .item-block-head span{ font-size:0.8rem; color:var(--text-dim); }
+  button{
+    font-family:inherit; cursor:pointer; border-radius:999px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text); padding:8px 16px; font-size:0.85rem;
+  }
+  button:hover{ background:rgba(255,255,255,0.08); }
+  .btn-add{ margin-top: 4px; }
+  .btn-remove{ color:var(--danger); border-color:rgba(255,107,107,0.3); padding:4px 10px; font-size:0.78rem; }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#04140f;
+    border:none; font-weight:600; padding:14px 28px; font-size:0.95rem;
+  }
+  .save-bar{
+    position:fixed; bottom:0; left:0; right:0;
+    background:rgba(5,7,13,0.95); border-top:1px solid var(--border);
+    padding:16px 20px; display:flex; justify-content:center; align-items:center; gap:16px;
+    backdrop-filter: blur(10px);
+  }
+  #status{ font-size:0.88rem; color:var(--text-dim); }
+  #status.ok{ color:var(--accent); }
+  #status.err{ color:var(--danger); }
+  a.site-link{ color:var(--accent-2); }
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <h1>Edit Content</h1>
+  <p class="sub">Enter your admin password to continue.</p>
+  <input type="password" id="passwordInput" placeholder="Password" />
+  <button class="btn-primary" style="margin-top:16px; width:100%;" id="unlockBtn">Unlock</button>
+  <p class="sub" id="gateError" style="color:var(--danger);"></p>
+</div>
+
+<div class="wrap" id="editor" style="display:none;">
+  <h1>Edit Site Content</h1>
+  <p class="sub">Changes save directly to <a class="site-link" href="/" target="_blank">your live site</a> and go live in about a minute.</p>
+
+  <fieldset>
+    <legend>Basics</legend>
+    <label>Full name</label>
+    <input type="text" id="f_name" />
+    <label>Eyebrow (small line above your name)</label>
+    <input type="text" id="f_eyebrow" />
+    <label>Title / role</label>
+    <input type="text" id="f_role" />
+    <label>Hero summary</label>
+    <textarea id="f_heroSummary"></textarea>
+    <div class="row">
+      <div>
+        <label>Location</label>
+        <input type="text" id="f_location" />
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" id="f_email" />
+      </div>
+    </div>
+    <label>LinkedIn URL</label>
+    <input type="url" id="f_linkedin" />
+    <label>About paragraph (HTML allowed, e.g. &lt;strong&gt;)</label>
+    <textarea id="f_about" style="min-height:120px;"></textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Stats</legend>
+    <div id="statsList"></div>
+    <button type="button" class="btn-add" data-add="stats">+ Add stat</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Experience</legend>
+    <div id="experienceList"></div>
+    <button type="button" class="btn-add" data-add="experience">+ Add role</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Achievements</legend>
+    <div id="achievementsList"></div>
+    <button type="button" class="btn-add" data-add="achievements">+ Add achievement</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Skills</legend>
+    <label>One skill per line</label>
+    <textarea id="f_skills" style="min-height:160px;"></textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Education</legend>
+    <label>Degree</label>
+    <input type="text" id="f_eduDegree" />
+    <label>School</label>
+    <input type="text" id="f_eduSchool" />
+    <div class="row">
+      <div>
+        <label>Dates</label>
+        <input type="text" id="f_eduDate" />
+      </div>
+      <div>
+        <label>Meta (e.g. GPA)</label>
+        <input type="text" id="f_eduMeta" />
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<div class="save-bar" id="saveBar" style="display:none;">
+  <button class="btn-primary" id="saveBtn">Save &amp; Publish</button>
+  <span id="status"></span>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var password = "";
+  var content = null;
+
+  var gate = document.getElementById("gate");
+  var editor = document.getElementById("editor");
+  var saveBar = document.getElementById("saveBar");
+  var statusEl = document.getElementById("status");
+
+  document.getElementById("unlockBtn").addEventListener("click", unlock);
+  document.getElementById("passwordInput").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") unlock();
+  });
+
+  function unlock() {
+    password = document.getElementById("passwordInput").value;
+    if (!password) return;
+    fetch("content.json", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        content = data;
+        populateForm(data);
+        gate.style.display = "none";
+        editor.style.display = "block";
+        saveBar.style.display = "flex";
+      })
+      .catch(function () {
+        document.getElementById("gateError").textContent = "Could not load content.json.";
+      });
+  }
+
+  function val(id) { return document.getElementById(id).value; }
+  function setVal(id, v) { document.getElementById(id).value = v || ""; }
+
+  function populateForm(data) {
+    setVal("f_name", data.name);
+    setVal("f_eyebrow", data.eyebrow);
+    setVal("f_role", data.role);
+    setVal("f_heroSummary", data.heroSummary);
+    setVal("f_location", data.location);
+    setVal("f_email", data.email);
+    setVal("f_linkedin", data.linkedin);
+    setVal("f_about", data.about);
+    setVal("f_skills", (data.skills || []).join("\n"));
+
+    var edu = data.education || {};
+    setVal("f_eduDegree", edu.degree);
+    setVal("f_eduSchool", edu.school);
+    setVal("f_eduDate", edu.date);
+    setVal("f_eduMeta", edu.meta);
+
+    renderStats(data.stats || []);
+    renderExperience(data.experience || []);
+    renderAchievements(data.achievements || []);
+  }
+
+  function makeRemoveBtn(container, block) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn-remove";
+    btn.textContent = "Remove";
+    btn.addEventListener("click", function () { container.removeChild(block); });
+    return btn;
+  }
+
+  function field(labelText, value, multiline) {
+    var wrap = document.createElement("div");
+    var label = document.createElement("label");
+    label.textContent = labelText;
+    var input = document.createElement(multiline ? "textarea" : "input");
+    if (!multiline) input.type = "text";
+    input.value = value || "";
+    wrap.appendChild(label);
+    wrap.appendChild(input);
+    return { wrap: wrap, input: input };
+  }
+
+  // Stats
+  var statsList = document.getElementById("statsList");
+  function renderStats(items) {
+    statsList.innerHTML = "";
+    items.forEach(function (s) { addStatBlock(s); });
+  }
+  function addStatBlock(s) {
+    s = s || { value: "", suffix: "", label: "" };
+    var block = document.createElement("div");
+    block.className = "item-block";
+    var head = document.createElement("div");
+    head.className = "item-block-head";
+    head.appendChild(document.createElement("span"));
+    var row = document.createElement("div");
+    row.className = "row";
+    var v = field("Value (number)", s.value);
+    v.input.type = "number";
+    v.input.dataset.k = "value";
+    var suf = field("Suffix (e.g. +, %, x, K+)", s.suffix);
+    suf.input.dataset.k = "suffix";
+    row.appendChild(v.wrap);
+    row.appendChild(suf.wrap);
+    var lbl = field("Label", s.label);
+    lbl.input.dataset.k = "label";
+    head.appendChild(makeRemoveBtn(statsList, block));
+    block.appendChild(head);
+    block.appendChild(row);
+    block.appendChild(lbl.wrap);
+    statsList.appendChild(block);
+  }
+
+  // Experience
+  var experienceList = document.getElementById("experienceList");
+  function renderExperience(items) {
+    experienceList.innerHTML = "";
+    items.forEach(function (job) { addExperienceBlock(job); });
+  }
+  function addExperienceBlock(job) {
+    job = job || { role: "", org: "", date: "", bullets: [] };
+    var block = document.createElement("div");
+    block.className = "item-block";
+    var head = document.createElement("div");
+    head.className = "item-block-head";
+    head.appendChild(document.createElement("span"));
+    head.appendChild(makeRemoveBtn(experienceList, block));
+    block.appendChild(head);
+
+    var role = field("Role / title", job.role); role.input.dataset.k = "role";
+    var org = field("Company", job.org); org.input.dataset.k = "org";
+    var date = field("Dates", job.date); date.input.dataset.k = "date";
+    var bullets = field("Bullet points (one per line, <strong> allowed)", (job.bullets || []).join("\n"), true);
+    bullets.input.dataset.k = "bullets";
+    bullets.input.style.minHeight = "140px";
+
+    block.appendChild(role.wrap);
+    block.appendChild(org.wrap);
+    block.appendChild(date.wrap);
+    block.appendChild(bullets.wrap);
+    experienceList.appendChild(block);
+  }
+
+  // Achievements
+  var achievementsList = document.getElementById("achievementsList");
+  function renderAchievements(items) {
+    achievementsList.innerHTML = "";
+    items.forEach(function (a) { addAchievementBlock(a); });
+  }
+  function addAchievementBlock(a) {
+    a = a || { icon: "", title: "", text: "" };
+    var block = document.createElement("div");
+    block.className = "item-block";
+    var head = document.createElement("div");
+    head.className = "item-block-head";
+    head.appendChild(document.createElement("span"));
+    head.appendChild(makeRemoveBtn(achievementsList, block));
+    block.appendChild(head);
+
+    var row = document.createElement("div");
+    row.className = "row";
+    var icon = field("Emoji icon", a.icon); icon.input.dataset.k = "icon";
+    var title = field("Title", a.title); title.input.dataset.k = "title";
+    row.appendChild(icon.wrap);
+    row.appendChild(title.wrap);
+    var text = field("Description", a.text, true); text.input.dataset.k = "text";
+
+    block.appendChild(row);
+    block.appendChild(text.wrap);
+    achievementsList.appendChild(block);
+  }
+
+  document.querySelectorAll("[data-add]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var kind = btn.getAttribute("data-add");
+      if (kind === "stats") addStatBlock();
+      if (kind === "experience") addExperienceBlock();
+      if (kind === "achievements") addAchievementBlock();
+    });
+  });
+
+  function collectBlocks(container) {
+    return Array.from(container.children).map(function (block) {
+      var obj = {};
+      block.querySelectorAll("[data-k]").forEach(function (inputEl) {
+        var k = inputEl.dataset.k;
+        if (k === "bullets") {
+          obj[k] = inputEl.value.split("\n").map(function (s) { return s.trim(); }).filter(Boolean);
+        } else if (k === "value") {
+          obj[k] = Number(inputEl.value);
+        } else {
+          obj[k] = inputEl.value;
+        }
+      });
+      return obj;
+    });
+  }
+
+  document.getElementById("saveBtn").addEventListener("click", function () {
+    var updated = {
+      name: val("f_name"),
+      eyebrow: val("f_eyebrow"),
+      role: val("f_role"),
+      heroSummary: val("f_heroSummary"),
+      location: val("f_location"),
+      email: val("f_email"),
+      linkedin: val("f_linkedin"),
+      resumeFile: (content && content.resumeFile) || "assets/Anirban_De_Resume.pdf",
+      about: val("f_about"),
+      stats: collectBlocks(statsList),
+      experience: collectBlocks(experienceList),
+      achievements: collectBlocks(achievementsList),
+      skills: val("f_skills").split("\n").map(function (s) { return s.trim(); }).filter(Boolean),
+      education: {
+        degree: val("f_eduDegree"),
+        school: val("f_eduSchool"),
+        date: val("f_eduDate"),
+        meta: val("f_eduMeta")
+      }
+    };
+
+    statusEl.textContent = "Saving…";
+    statusEl.className = "";
+
+    fetch("/api/save-content", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: password, content: updated })
+    })
+      .then(function (r) { return r.json().then(function (body) { return { ok: r.ok, body: body }; }); })
+      .then(function (res) {
+        if (res.ok) {
+          statusEl.textContent = "Saved — live in about a minute.";
+          statusEl.className = "ok";
+          content = updated;
+        } else {
+          statusEl.textContent = "Error: " + (res.body.error || "save failed");
+          statusEl.className = "err";
+        }
+      })
+      .catch(function (err) {
+        statusEl.textContent = "Error: " + err.message;
+        statusEl.className = "err";
+      });
+  });
+})();
+</script>
+</body>
+</html>

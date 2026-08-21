@@ -1,0 +1,73 @@
+{
+  "name": "Anirban De",
+  "eyebrow": "Head of Risk Management & Control Assurance · Uber Technologies",
+  "role": "Technology Risk & Cybersecurity Leader",
+  "heroSummary": "14+ years building enterprise-scale risk management, governance, and security compliance programs — turning fragmented security processes into AI-driven platforms that sharpen executive decision-making, accelerate remediation, and reduce enterprise risk.",
+  "location": "Newark, CA",
+  "email": "anirban.sync@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/anirban-d-10aa2836/",
+  "resumeFile": "assets/Anirban_De_Resume.pdf",
+  "about": "I lead enterprise technology risk and cybersecurity programs at global scale — with deep expertise across <strong>Enterprise Risk Management, GRC, Third-Party Risk, Security Engineering, AI Risk, Compliance, and Cybersecurity Maturity</strong>. I've built a track record as a trusted advisor to executive leadership, leading cross-functional initiatives across global engineering organizations to transform how enterprises see, prioritize, and act on risk.",
+  "stats": [
+    { "value": 14, "suffix": "+", "label": "years in risk & cybersecurity" },
+    { "value": 23, "suffix": "K+", "label": "vendors assessed for third-party risk" },
+    { "value": 70, "suffix": "%", "label": "reduction in security issue backlog" },
+    { "value": 3, "suffix": "x", "label": "faster remediation velocity" }
+  ],
+  "experience": [
+    {
+      "role": "Head of Risk Management & Control Assurance",
+      "org": "Uber Technologies",
+      "date": "Jan 2021 — Present",
+      "bullets": [
+        "Lead strategy and execution for <strong>Risk Central</strong>, Uber's AI-native Enterprise Risk Intelligence Platform, unifying risk across users, SaaS, AI agents, endpoints, insider threat, third parties, and data assets into a single decision-making platform.",
+        "Built Uber's first enterprise-wide technology risk lifecycle, standardizing risk taxonomy, scoring, governance, and reporting across engineering organizations.",
+        "Designed AI-driven Third-Party Risk Intelligence, assessing <strong>23,000+ vendors</strong>, identifying Uber's most critical suppliers, and introducing Vendor Blast Radius analysis.",
+        "Transformed Enterprise Issue Management with risk-based prioritization and executive governance — reducing the security issue backlog by <strong>70%</strong> and improving remediation velocity by <strong>2–3×</strong>.",
+        "Established Uber's Enterprise Security Exception Management program, deploying AI agents that automate exception triage and governance, reducing Device Trust exceptions by <strong>40%</strong>.",
+        "Led enterprise compliance initiatives across PSD2, ISO, and SOX — increasing automated assurance coverage by <strong>30%</strong> and cutting audit preparation effort by <strong>40%</strong>.",
+        "Directed Uber's NIST Cybersecurity Maturity program, improving organizational maturity from <strong>2.4 toward 4.0</strong> through enterprise-wide assessments and strategic investment planning.",
+        "Lead global cross-functional teams delivering initiatives across Risk Intelligence, Third-Party Risk, Security Assurance, Governance, Compliance, and AI Risk."
+      ]
+    },
+    {
+      "role": "Manager",
+      "org": "KPMG US LLP",
+      "date": "Jul 2016 — Jan 2021",
+      "bullets": [
+        "Led enterprise technology risk and cyber transformation programs for Fortune 500 organizations across financial services, healthcare, and retail.",
+        "Designed IT risk frameworks, continuous control monitoring, cloud governance, and executive reporting that improved audit readiness and operational resilience.",
+        "Served as trusted advisor to executive leadership on risk strategy, control effectiveness, regulatory compliance, and technology modernization."
+      ]
+    },
+    {
+      "role": "Senior Consultant",
+      "org": "Deloitte & Touché LLP",
+      "date": "Jul 2012 — Jul 2016",
+      "bullets": [
+        "Delivered cybersecurity, IT risk, SOX, NIST, and regulatory compliance programs for Fortune 1000 organizations.",
+        "Developed enterprise risk frameworks, Key Risk Indicators (KRIs), and governance models that improved security posture and reduced audit findings."
+      ]
+    }
+  ],
+  "achievements": [
+    { "icon": "🧭", "title": "Risk Central", "text": "Led strategy and execution for Uber's AI-native Enterprise Risk Intelligence Platform, unifying risk signals across users, SaaS, AI agents, endpoints, insider threat, third parties, and data assets into one decision-making platform." },
+    { "icon": "🔗", "title": "Third-Party Risk Intelligence", "text": "Designed AI-driven vendor risk assessment covering 23,000+ vendors, identifying Uber's most critical suppliers and introducing Vendor Blast Radius analysis." },
+    { "icon": "📉", "title": "Enterprise Issue Management", "text": "Introduced risk-based prioritization and executive governance, cutting the security issue backlog by 70% and improving remediation velocity 2–3×." },
+    { "icon": "🤖", "title": "Security Exception Management", "text": "Built Uber's Enterprise Security Exception Management program with AI agents automating exception triage and governance, reducing Device Trust exceptions by 40%." },
+    { "icon": "📋", "title": "Compliance at Scale", "text": "Led enterprise compliance across PSD2, ISO, and SOX — increasing automated assurance coverage by 30% and reducing audit preparation effort by 40%." },
+    { "icon": "📈", "title": "NIST Cybersecurity Maturity", "text": "Directed Uber's NIST maturity program, driving organizational maturity from 2.4 toward 4.0 through enterprise-wide assessment and investment planning." }
+  ],
+  "skills": [
+    "Enterprise Risk Management", "GRC", "Third-Party Risk", "Security Engineering",
+    "AI Risk", "Compliance", "Cybersecurity Maturity", "SOX", "NIST CSF", "ISO 27001",
+    "PSD2", "Cloud Governance", "Continuous Control Monitoring", "Executive Reporting",
+    "Cross-Functional Leadership"
+  ],
+  "education": {
+    "degree": "Bachelor of Engineering, Electronics & Communication",
+    "school": "University of Delhi",
+    "date": "2008 — 2012",
+    "meta": "GPA 3.93 / 4.0"
+  }
+}
