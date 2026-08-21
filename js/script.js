@@ -1,13 +1,10 @@
 (function () {
   "use strict";
 
-  // TODO: set your public LinkedIn profile URL here.
-  var LINKEDIN_URL = "";
-  if (LINKEDIN_URL) {
-    document.querySelectorAll("#linkedinLink, #linkedinLink2").forEach(function (el) {
-      el.setAttribute("href", LINKEDIN_URL);
-    });
-  }
+  var LINKEDIN_URL = "https://www.linkedin.com/in/anirban-d-10aa2836/";
+  document.querySelectorAll("#linkedinLink, #linkedinLink2").forEach(function (el) {
+    el.setAttribute("href", LINKEDIN_URL);
+  });
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
