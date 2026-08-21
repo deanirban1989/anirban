@@ -17,7 +17,7 @@ robots.txt             Keeps /admin.html and /api/ out of search engines
 
 ## Editing content
 
-**Option A — the admin panel (recommended):** go to `https://<your-site>/admin.html`, enter your password, edit fields, click **Save & Publish**. Requires one-time setup below. Only works on the **Vercel** URL — GitHub Pages is static hosting and can't run the save function, so `/admin.html` there will load but Save will fail.
+**Option A — the admin panel (recommended):** go to `https://<your-site>/admin.html`, enter your password, edit fields, click **Save & Publish**. Requires one-time setup below and the site must be running on Vercel — the save function needs a serverless backend, which static hosts don't provide.
 
 **Option B — edit the file directly:** open `content.json` (in the repo, or via GitHub's web editor — the pencil icon on github.com) and edit the JSON fields, then commit. No coding needed, just plain text.
 
@@ -47,4 +47,4 @@ Then open http://localhost:8000.
 
 ## Deploy
 
-Works as-is on GitHub Pages, Vercel, Netlify, or any static host — just point it at the repo root.
+Hosted on Vercel, auto-deploying from the `claude/personal-portfolio-site-0nac31` branch, with `anirbande.com` pointed at it as the custom domain.
