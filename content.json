@@ -9,10 +9,26 @@
   "resumeFile": "assets/Anirban_De_Resume.pdf",
   "about": "I lead enterprise technology risk and cybersecurity programs at global scale — with deep expertise across <strong>Enterprise Risk Management, GRC, Third-Party Risk, Security Engineering, AI Risk, Compliance, and Cybersecurity Maturity</strong>. I've built a track record as a trusted advisor to executive leadership, leading cross-functional initiatives across global engineering organizations to transform how enterprises see, prioritize, and act on risk.",
   "stats": [
-    { "value": 14, "suffix": "+", "label": "years in risk & cybersecurity" },
-    { "value": 23, "suffix": "K+", "label": "vendors assessed for third-party risk" },
-    { "value": 70, "suffix": "%", "label": "reduction in security issue backlog" },
-    { "value": 3, "suffix": "x", "label": "faster remediation velocity" }
+    {
+      "value": 14,
+      "suffix": "+",
+      "label": "years in risk & cybersecurity"
+    },
+    {
+      "value": 3,
+      "suffix": "K+",
+      "label": "vendors assessed for third-party risk"
+    },
+    {
+      "value": 70,
+      "suffix": "%",
+      "label": "reduction in security issue backlog"
+    },
+    {
+      "value": 3,
+      "suffix": "x",
+      "label": "faster remediation velocity"
+    }
   ],
   "experience": [
     {
@@ -51,17 +67,52 @@
     }
   ],
   "achievements": [
-    { "icon": "🧭", "title": "Risk Central", "text": "Led strategy and execution for Uber's AI-native Enterprise Risk Intelligence Platform, unifying risk signals across users, SaaS, AI agents, endpoints, insider threat, third parties, and data assets into one decision-making platform." },
-    { "icon": "🔗", "title": "Third-Party Risk Intelligence", "text": "Designed AI-driven vendor risk assessment covering 23,000+ vendors, identifying Uber's most critical suppliers and introducing Vendor Blast Radius analysis." },
-    { "icon": "📉", "title": "Enterprise Issue Management", "text": "Introduced risk-based prioritization and executive governance, cutting the security issue backlog by 70% and improving remediation velocity 2–3×." },
-    { "icon": "🤖", "title": "Security Exception Management", "text": "Built Uber's Enterprise Security Exception Management program with AI agents automating exception triage and governance, reducing Device Trust exceptions by 40%." },
-    { "icon": "📋", "title": "Compliance at Scale", "text": "Led enterprise compliance across PSD2, ISO, and SOX — increasing automated assurance coverage by 30% and reducing audit preparation effort by 40%." },
-    { "icon": "📈", "title": "NIST Cybersecurity Maturity", "text": "Directed Uber's NIST maturity program, driving organizational maturity from 2.4 toward 4.0 through enterprise-wide assessment and investment planning." }
+    {
+      "icon": "🧭",
+      "title": "Risk Central",
+      "text": "Led strategy and execution for Uber's AI-native Enterprise Risk Intelligence Platform, unifying risk signals across users, SaaS, AI agents, endpoints, insider threat, third parties, and data assets into one decision-making platform."
+    },
+    {
+      "icon": "🔗",
+      "title": "Third-Party Risk Intelligence",
+      "text": "Designed AI-driven vendor risk assessment covering 23,000+ vendors, identifying Uber's most critical suppliers and introducing Vendor Blast Radius analysis."
+    },
+    {
+      "icon": "📉",
+      "title": "Enterprise Issue Management",
+      "text": "Introduced risk-based prioritization and executive governance, cutting the security issue backlog by 70% and improving remediation velocity 2–3×."
+    },
+    {
+      "icon": "🤖",
+      "title": "Security Exception Management",
+      "text": "Built Uber's Enterprise Security Exception Management program with AI agents automating exception triage and governance, reducing Device Trust exceptions by 40%."
+    },
+    {
+      "icon": "📋",
+      "title": "Compliance at Scale",
+      "text": "Led enterprise compliance across PSD2, ISO, and SOX — increasing automated assurance coverage by 30% and reducing audit preparation effort by 40%."
+    },
+    {
+      "icon": "📈",
+      "title": "NIST Cybersecurity Maturity",
+      "text": "Directed Uber's NIST maturity program, driving organizational maturity from 2.4 toward 4.0 through enterprise-wide assessment and investment planning."
+    }
   ],
   "skills": [
-    "Enterprise Risk Management", "GRC", "Third-Party Risk", "Security Engineering",
-    "AI Risk", "Compliance", "Cybersecurity Maturity", "SOX", "NIST CSF", "ISO 27001",
-    "PSD2", "Cloud Governance", "Continuous Control Monitoring", "Executive Reporting",
+    "Enterprise Risk Management",
+    "GRC",
+    "Third-Party Risk",
+    "Security Engineering",
+    "AI Risk",
+    "Compliance",
+    "Cybersecurity Maturity",
+    "SOX",
+    "NIST CSF",
+    "ISO 27001",
+    "PSD2",
+    "Cloud Governance",
+    "Continuous Control Monitoring",
+    "Executive Reporting",
     "Cross-Functional Leadership"
   ],
   "education": {
