@@ -569,3 +569,34 @@ body{letter-spacing:-.005em}h1,h2,h3{letter-spacing:-.035em}.nav-wrap{background
 .card p{font-size:1rem;line-height:1.8}
 .card{min-height:215px}
 @media(max-width:680px){.hero h1{font-size:clamp(3rem,12vw,4.6rem)}.hero-summary{font-size:1.08rem}.section-title{font-size:2.35rem}}
+
+/* Light editorial theme */
+:root{
+  color-scheme:light;
+  --bg:#ffffff;
+  --bg-alt:#f6f8fa;
+  --surface:#ffffff;
+  --surface-strong:#f1f5f8;
+  --border:#dfe5eb;
+  --text:#17212b;
+  --text-dim:#485968;
+  --text-faint:#647586;
+  --accent:#087e72;
+  --accent-2:#235c8e;
+  --accent-soft:rgba(8,126,114,.08);
+}
+body{background:#fff;color:var(--text)}
+.nav-wrap{background:rgba(255,255,255,.94)}
+.nav-links{background:transparent}
+.hero h1{color:var(--text)}
+.hero-role{color:#34495a}
+.hero-bg .glow{opacity:.035}
+.grid-overlay{opacity:.12}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost,.btn-small{background:#fff;color:var(--text);border-color:var(--border)}
+.btn-ghost:hover,.btn-small:hover{background:#f1f5f8}
+.stat,.timeline-card,.card,.edu-card,.contact-link{background:#fff}
+.timeline-dot{background:#fff}
+.timeline-list strong{color:#17212b}
+.tag{background:#fff}
+@media(max-width:680px){.nav-links{background:#fff}}
