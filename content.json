@@ -1,13 +1,13 @@
 {
   "name": "Anirban De",
-  "eyebrow": "Head of Risk Management & Control Assurance · Uber Technologies",
-  "role": "Technology Risk & Cybersecurity Leader",
-  "heroSummary": "14+ years building enterprise-scale risk management, governance, and security compliance programs — turning fragmented security processes into AI-driven platforms that sharpen executive decision-making, accelerate remediation, and reduce enterprise risk.",
+  "eyebrow": "SECURITY ENGINEERING · AI GOVERNANCE · LEADERSHIP",
+  "role": "Building the future of security, risk & trust.",
+  "heroSummary": "Cybersecurity leader and builder working at the intersection of AI, engineering and enterprise governance. I turn complex risk and compliance challenges into scalable systems.",
   "location": "Newark, CA",
   "email": "anirban.sync@gmail.com",
   "linkedin": "https://www.linkedin.com/in/anirban-d-10aa2836/",
   "resumeFile": "assets/Anirban_De_Resume.pdf",
-  "about": "I lead enterprise technology risk and cybersecurity programs at global scale — with deep expertise across <strong>Enterprise Risk Management, GRC, Third-Party Risk, Security Engineering, AI Risk, Compliance, and Cybersecurity Maturity</strong>. I've built a track record as a trusted advisor to executive leadership, leading cross-functional initiatives across global engineering organizations to transform how enterprises see, prioritize, and act on risk.",
+  "about": "I build security programs and technology that make trust measurable and operational. My work spans <strong>security engineering, risk automation, AI governance, enterprise assurance and technical leadership</strong> — connecting strategy with the systems teams use every day.",
   "stats": [
     {
       "value": 14,
@@ -15,9 +15,9 @@
       "label": "years in risk & cybersecurity"
     },
     {
-      "value": 3,
+      "value": 4,
       "suffix": "",
-      "label": "Companies I worked for"
+      "label": "organizations across career"
     },
     {
       "value": 70,
@@ -32,9 +32,19 @@
   ],
   "experience": [
     {
+      "role": "Member of Technical Staff — Security / GRC Engineering",
+      "org": "Replit",
+      "date": "Oct 2026 — Present",
+      "bullets": [
+        "Building automation for user access reviews and audit evidence, with a focus on reducing reviewer effort and improving governance.",
+        "Engineering security and GRC workflows that connect identity, applications, controls and compliance obligations.",
+        "Working across access governance, ISO 27001, SOC 2 and AI-enabled security operations."
+      ]
+    },
+    {
       "role": "Head of Risk Management & Control Assurance",
       "org": "Uber Technologies",
-      "date": "Jan 2021 — Present",
+      "date": "Jan 2021 — Oct 2026",
       "bullets": [
         "Lead strategy and execution for <strong>Risk Central</strong>, Uber's AI-native Enterprise Risk Intelligence Platform, unifying risk across users, SaaS, AI agents, endpoints, insider threat, third parties, and data assets into a single decision-making platform.",
         "Built Uber's first enterprise-wide technology risk lifecycle, standardizing risk taxonomy, scoring, governance, and reporting across engineering organizations.",
