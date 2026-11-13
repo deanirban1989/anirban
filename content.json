@@ -83,51 +83,66 @@
   ],
   "achievements": [
     {
-      "icon": "🧩",
-      "title": "Making security easier to understand",
-      "text": "Helped bring information about technology risks into one place so teams could see what mattered most and decide what to fix first."
+      "title": "Enterprise risk platform — Risk Central",
+      "category": "Security platform engineering",
+      "context": "Risk information was scattered across separate workflows, making priorities difficult to see.",
+      "action": "Led work to centralize risk, issue, exception and control workflows in a shared platform.",
+      "impact": "Created a more consistent way to assign ownership, prioritize risks and track decisions.",
+      "status": "Delivered at Uber"
     },
     {
-      "icon": "⚡",
-      "title": "Helping teams fix problems faster",
-      "text": "Improved how security issues were tracked and prioritized, contributing to a 70% reduction in the issue backlog."
+      "title": "Reducing the security issue backlog",
+      "category": "Security operations",
+      "context": "Security findings were difficult to prioritize and drive to closure.",
+      "action": "Improved issue intake, prioritization, accountability and remediation workflows.",
+      "impact": "70% reduction in the security issue backlog and up to 3× faster remediation velocity, based on reported program results.",
+      "status": "Delivered at Uber"
     },
     {
-      "icon": "🤖",
-      "title": "Automating repetitive work",
-      "text": "Built and improved workflows that reduce manual security reviews and make it easier for people to focus on important decisions."
+      "title": "Automating compliance evidence",
+      "category": "Security assurance and automation",
+      "context": "Repeated manual control checks and evidence collection slowed audits.",
+      "action": "Built common-control and evidence automation workflows supporting programs including SOC 2 and ISO 27001.",
+      "impact": "Reported 40% reduction in audit preparation effort.",
+      "status": "Delivered in enterprise programs"
     },
     {
-      "icon": "🔎",
-      "title": "Understanding risks across partners",
-      "text": "Worked on ways to assess and prioritize security risks across a large network of vendors and partners."
+      "title": "Making access reviews less manual",
+      "category": "Identity security and engineering",
+      "context": "Reviewing application access manually consumes owner time and can miss important changes.",
+      "action": "Developing workflows to gather entitlements, route decisions to application owners and preserve evidence.",
+      "impact": "Designed to reduce reviewer effort and improve accountability; measurable outcomes are still pending.",
+      "status": "In progress at Replit"
     },
     {
-      "icon": "🛡️",
-      "title": "Making trust measurable",
-      "text": "Helped organizations demonstrate that their systems and processes meet important security expectations."
+      "title": "Third-party security intelligence",
+      "category": "Vendor risk",
+      "context": "Large vendor ecosystems make it difficult to identify which relationships need attention.",
+      "action": "Helped develop risk intelligence and assessment workflows to prioritize vendors.",
+      "impact": "Supported security oversight across an ecosystem of more than 23,000 vendors.",
+      "status": "Delivered at Uber"
     },
     {
-      "icon": "🌱",
-      "title": "Building better systems",
-      "text": "I enjoy turning complex, fragmented processes into useful tools that people actually want to use."
+      "title": "Security exception governance",
+      "category": "Security operations and risk decisions",
+      "context": "Teams need a structured way to manage temporary security trade-offs.",
+      "action": "Developed exception request, review, approval and follow-up workflows.",
+      "impact": "Improved visibility into decisions; related program work reported a 40% reduction in device-trust exceptions.",
+      "status": "Delivered at Uber"
     }
   ],
   "skills": [
-    "Enterprise Risk Management",
-    "GRC",
-    "Third-Party Risk",
-    "Security Engineering",
-    "AI Risk",
-    "Compliance",
-    "Cybersecurity Maturity",
-    "SOX",
-    "NIST CSF",
-    "ISO 27001",
-    "PSD2",
-    "Cloud Governance",
+    "Security Platform Engineering",
+    "AI & Agent Security Governance",
+    "Identity & Access Governance",
+    "Security Automation",
     "Continuous Control Monitoring",
-    "Executive Reporting",
+    "SOC 2 & ISO 27001",
+    "FedRAMP Readiness",
+    "Risk & Issue Management",
+    "Third-Party Security",
+    "Security Exceptions",
+    "Executive Risk Reporting",
     "Cross-Functional Leadership"
   ],
   "education": {
