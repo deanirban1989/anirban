@@ -225,7 +225,8 @@ function investmentTables(groups, dateHeading = "First recorded purchase", nameH
       const purchase = date ? `<time datetime="${esc(date)}">${esc(dateFormat.format(new Date(date)))}</time>` : "Unavailable";
       const value = unrealizedReturns[name];
       const quotedReturn = Number.isFinite(value) ? `${value > 0 ? "+" : ""}${value.toFixed(1)}%` : "—";
-      const returnCell = showReturn ? `<td class="investment-return">${quotedReturn}</td>` : "";
+      const returnColor = Number.isFinite(value) ? (value < 0 ? "#b42318" : "#067647") : "var(--muted)";
+      const returnCell = showReturn ? `<td class="investment-return" style="color: ${returnColor}; font-weight: 650">${quotedReturn}</td>` : "";
       return `<tr><th scope="row">${esc(name)}</th><td>${purchase}</td>${returnCell}</tr>`;
     }).join("");
     return `
