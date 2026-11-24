@@ -38,7 +38,7 @@
     </section>`;
 }
 
-const investmentIndustries = {
+let investmentIndustries = {
   "Aerospace & space": [
     ["AST SpaceMobile", "2026-02-13"],
     ["Joby Aviation", "2026-02-13"],
@@ -132,7 +132,7 @@ const investmentIndustries = {
   ],
 };
 
-const unrealizedReturns = {
+let unrealizedReturns = {
   "NVIDIA": -9.9,
   "Alphabet": -23.6,
   "Microsoft": 16.3,
@@ -211,7 +211,7 @@ const unrealizedReturns = {
   "SPDR Gold Shares (GLD)": -19.5,
   "VanEck Rare Earth/Strategic Metals ETF (REMX)": -51.1
 };
-const returnSnapshotDate = "November 24, 2026";
+let returnSnapshotDate = "November 24, 2026";
 
 function investmentTables(groups, dateHeading = "First recorded purchase", nameHeading = "Company", showReturn = false, sort = "oldest") {
   const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
@@ -288,7 +288,7 @@ function ventureInvestments() {
     </section>`;
 }
 
-const etfHoldings = [
+let etfHoldings = [
   [
     "Vanguard S&P 500 ETF (VOO)",
     "2026-02-25"
@@ -394,6 +394,41 @@ function setupHoldingsExplorer(panel, groups, nameHeading) {
   industry?.addEventListener("change", update);
   sort.addEventListener("change", update);
   update();
+  return nextGroups => {
+    groups = nextGroups;
+    if (industry) {
+      const selected = industry.value;
+      industry.innerHTML = '<option value="">All industries</option>' + groups.map(([name]) =>
+        `<option value="${esc(name)}">${esc(name)}</option>`).join("");
+      if (groups.some(([name]) => name === selected)) industry.value = selected;
+    }
+    update();
+  };
+}
+
+let investmentRefreshedAt;
+
+async function loadInvestmentSnapshot() {
+  try {
+    const response = await fetch("/api/investments", { signal: AbortSignal.timeout(3500) });
+    if (!response.ok) return;
+    const { snapshot, refreshed_at } = await response.json();
+    if (!snapshot?.industries || !Array.isArray(snapshot.etfs) || !snapshot.returns) return;
+    const valuationDate = new Date(snapshot.valued_on);
+    if (!Number.isFinite(valuationDate.getTime())) return;
+    investmentIndustries = snapshot.industries;
+    etfHoldings = snapshot.etfs;
+    unrealizedReturns = snapshot.returns;
+    returnSnapshotDate = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(valuationDate);
+    if (refreshed_at && Number.isFinite(Date.parse(refreshed_at))) {
+      investmentRefreshedAt = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium", timeStyle: "short", timeZone: "America/Los_Angeles"
+      }).format(new Date(refreshed_at)) + " Pacific";
+    }
+    return true;
+  } catch {
+    // The bundled snapshot remains available when Supabase cannot be reached.
+  }
 }
 
 function investments() {
@@ -404,10 +439,11 @@ function investments() {
       <div>
         <h1>Investments</h1>
         <p>My public equity holdings and the companies I have exposure to through venture funds.</p>
+        <p id="investmentRefreshedAt" hidden></p>
       </div>
       <dl class="investment-overview">
-        <div><dt>Public companies</dt><dd>${companyCount}</dd></div>
-        <div><dt>Industry groups</dt><dd>${groups.length}</dd></div>
+        <div><dt>Public companies</dt><dd id="investmentCompanyCount">${companyCount}</dd></div>
+        <div><dt>Industry groups</dt><dd id="investmentIndustryCount">${groups.length}</dd></div>
       </dl>
     </header>
     <div class="investment-tabs" role="tablist" aria-label="Investment categories">
@@ -417,7 +453,7 @@ function investments() {
     </div>
     <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab">
       <div class="investment-section-header">
-        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of ${returnSnapshotDate}.</p></div>
+        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of <span data-return-snapshot-date>${returnSnapshotDate}</span>.</p></div>
       </div>
       ${investmentControls("Company name", groups)}
       <div class="investment-grid" data-holdings-results></div>
@@ -425,7 +461,7 @@ function investments() {
     </section>
     <section id="etfs" role="tabpanel" aria-labelledby="etfs-tab" class="public-equities" hidden>
       <h2>ETFs</h2>
-      <p>Unrealized returns as of ${returnSnapshotDate}.</p>
+      <p>Unrealized returns as of <span data-return-snapshot-date>${returnSnapshotDate}</span>.</p>
       ${investmentControls("Fund name or ticker")}
       <div data-holdings-results></div>
     </section>
@@ -433,9 +469,25 @@ function investments() {
 }
 
 function setupInvestments() {
-  setupHoldingsExplorer($("public-equities"), Object.entries(investmentIndustries), "Company");
-  setupHoldingsExplorer($("etfs"), [["Exchange-traded funds", etfHoldings]], "Fund");
+  const refreshEquities = setupHoldingsExplorer($("public-equities"), Object.entries(investmentIndustries), "Company");
+  const refreshEtfs = setupHoldingsExplorer($("etfs"), [["Exchange-traded funds", etfHoldings]], "Fund");
   renderIndiaInvestments();
+  loadInvestmentSnapshot().then(loaded => {
+    if (!loaded) return;
+    const groups = Object.entries(investmentIndustries);
+    refreshEquities(groups);
+    refreshEtfs([["Exchange-traded funds", etfHoldings]]);
+    $("investmentCompanyCount").textContent = groups.reduce((total, [, rows]) => total + rows.length, 0);
+    $("investmentIndustryCount").textContent = groups.length;
+    for (const date of document.querySelectorAll("[data-return-snapshot-date]")) {
+      date.textContent = returnSnapshotDate;
+    }
+    if (investmentRefreshedAt) {
+      const refreshed = $("investmentRefreshedAt");
+      refreshed.textContent = "Public equities and ETFs last refreshed " + investmentRefreshedAt;
+      refreshed.hidden = false;
+    }
+  });
   const tabs = [$("public-equities-tab"), $("etfs-tab"), $("venture-tab")];
 
   function selectTab(active) {
