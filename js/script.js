@@ -63,7 +63,6 @@ function init(d){renderFooter(d);if(!page)return;$("siteHeader").innerHTML='<nav
   if (window.location.hash === "#siteFooter") $("siteFooter").scrollIntoView();
 
 }const mount = page === "investments" ? () => import("/js/investments.mjs").then(module => module.mountInvestments({ $, esc }))
-  : page === "views" ? () => import("/js/views.mjs").then(module => module.mountViews({ $, esc }))
   : null;
 if ($("menuToggle")) {
   $("menuToggle").onclick = () => {
@@ -71,6 +70,7 @@ if ($("menuToggle")) {
     $("menuToggle").setAttribute("aria-expanded", String(open));
   };
 }
+if (page === "views") return;
 if (mount) {
   mount().catch(() => {
     const target = $("articleLibrary") || $("pageContent");
