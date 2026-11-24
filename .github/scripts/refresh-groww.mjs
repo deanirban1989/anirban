@@ -46,7 +46,7 @@ try {
       throw new Error("Holdings response has an invalid stock symbol.");
     }
     const company = metadata[entry.isin] ?? metadata[symbol];
-    companies.set(entry.isin || symbol, { name: company?.name ?? symbol, date: company?.date ?? null });
+    companies.set(entry.isin || symbol, { name: company?.name ?? symbol, date: company?.date ?? null, ...(company?.industry && { industry: company.industry }) });
   }
 
   const rows = [...companies.values()].sort((a, b) => a.name.localeCompare(b.name, "en"));
