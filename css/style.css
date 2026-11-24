@@ -289,3 +289,23 @@ body .skip-link:focus {
 .article-reading { padding-top: 46px; }
 .article-reading .kicker { margin-top: 24px; font-size: 14px; }
 .article-reading h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); }
+
+.case-overview { padding-top: 32px; padding-bottom: 32px; }
+.case-overview h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); margin: 0 0 16px; }
+.case-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.case-overview-grid > div { padding: 18px; background: var(--soft); }
+.case-overview-grid dt { margin-bottom: 5px; font-weight: 750; color: var(--teal); }
+.case-overview-grid dd { margin: 0; color: var(--ink); }
+#platform-design { scroll-margin-top: 90px; }
+@media (max-width: 620px) {
+  .case-overview-grid { grid-template-columns: 1fr; }
+}
