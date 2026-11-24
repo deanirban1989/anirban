@@ -244,3 +244,16 @@ body .skip-link:focus {
   color: var(--teal);
   box-shadow: 0 1px 3px #16223812;
 }
+
+.footer-row { align-items: center; }
+.footer-socials { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.footer-socials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  color: var(--ink);
+}
+.footer-socials a:hover { color: var(--teal); background: var(--soft); }

@@ -11,7 +11,6 @@ admin.html            Password-protected editor UI — edit fields, click Save, 
 api/save-content.js    Vercel serverless function: writes content.json back to GitHub
 css/style.css         Styling
 js/script.js          Fetches content.json, renders the page, nav/scroll/reveal behavior
-assets/               Static files (resume PDF, etc.)
 robots.txt             Keeps /admin.html and /api/ out of search engines
 ```
 
@@ -32,7 +31,6 @@ After adding both, trigger a redeploy from the Vercel dashboard (Deployments →
 
 ## Before you deploy
 
-- **Résumé**: `assets/Anirban_De_Resume.pdf` is downloadable from the nav bar and the Contact section — replace it any time by swapping the file (keep the same filename).
 - **Phone number**: intentionally left off the public site. Add it to `content.json` and `index.html`'s Contact section if you want it listed.
 
 ## Run locally
