@@ -36,25 +36,138 @@
     </section>`;
 }
 
+const investmentIndustries = {
+  "Aerospace & space": [
+    ["AST SpaceMobile", "2026-02-13"],
+    ["Joby Aviation", "2026-02-13"],
+    ["New Horizon Aircraft", "2026-05-12"],
+    ["Space Exploration Technologies", "2026-10-15"],
+  ],
+  "Automotive & robotics": [
+    ["Lucid Group", "2025-07-18"],
+    ["Serve Robotics", "2026-03-24"],
+    ["Tesla", "2025-05-27"],
+  ],
+  "Cloud & enterprise software": [
+    ["Microsoft", "2025-07-08"],
+    ["Nutanix", "2025-08-07"],
+    ["ServiceNow", "2025-05-30"],
+    ["Shopify", "2026-07-08"],
+  ],
+  "Cybersecurity & internet infrastructure": [
+    ["Cloudflare", "2025-05-30"],
+    ["Crowdstrike Holdings", "2025-05-30"],
+    ["Verisign", "2026-04-20"],
+  ],
+  "Digital assets": [
+    ["Cleanspark", "2025-10-16"],
+  ],
+  "Energy": [
+    ["Bloom Energy", "2026-10-13"],
+    ["Chevron", "2026-01-21"],
+    ["Diamondback Energy", "2026-05-11"],
+    ["Eagle Nuclear Energy", "2026-03-04"],
+    ["EOG Resources", "2026-09-15"],
+  ],
+  "Financial services": [
+    ["Progressive", "2025-05-30"],
+    ["Visa", "2025-05-30"],
+  ],
+  "Healthcare & life sciences": [
+    ["Abbvie", "2025-05-30"],
+    ["Gilead Sciences", "2025-05-30"],
+    ["Intuitive Surgical", "2025-05-30"],
+    ["Johnson & Johnson", "2025-07-08"],
+    ["Lilly(Eli) & Co", "2025-10-08"],
+    ["Merck & Co", "2026-01-21"],
+    ["Neurocrine Biosciences", "2025-10-08"],
+    ["Vertex Pharmaceuticals", "2026-09-22"],
+  ],
+  "Industrial equipment & transportation": [
+    ["CSX", "2026-04-29"],
+    ["Eaton Corporation", "2026-04-29"],
+    ["Flowserve", "2026-02-17"],
+    ["Trane Technologies", "2026-09-15"],
+  ],
+  "Internet & media": [
+    ["Alphabet", "2025-06-06"],
+    ["Meta Platforms", "2025-05-30"],
+    ["Netflix", "2025-05-30"],
+    ["Reddit", "2026-11-03"],
+    ["Spotify Technology", "2025-05-30"],
+  ],
+  "Metals, mining & chemicals": [
+    ["Cleveland-Cliffs", "2026-04-29"],
+    ["Ecolab", "2026-06-08"],
+    ["Freeport-McMoRan", "2026-04-14"],
+    ["Linde", "2026-03-20"],
+    ["Rare Earths Americas", "2026-05-12"],
+  ],
+  "Quantum computing": [
+    ["IonQ", "2026-03-24"],
+    ["Quantinuum", "2026-06-08"],
+  ],
+  "Retail & consumer goods": [
+    ["Amazon.com", "2025-07-08"],
+    ["Colgate-Palmolive", "2026-06-11"],
+    ["Costco Wholesale", "2025-05-30"],
+    ["Gap", "2025-05-30"],
+  ],
+  "Semiconductors & hardware": [
+    ["Advanced Micro Devices", "2026-07-08"],
+    ["Ambarella", "2026-06-08"],
+    ["Apple", "2025-05-30"],
+    ["Broadcom", "2025-05-30"],
+    ["Cadence Design Systems", "2026-04-20"],
+    ["Coherent", "2026-04-10"],
+    ["Credo Technology Group Holding", "2026-04-10"],
+    ["Entegris", "2026-06-18"],
+    ["Lam Research", "2025-07-08"],
+    ["NVIDIA", "2025-05-30"],
+    ["Qualcomm", "2025-07-08"],
+    ["SEALSQ", "2026-05-27"],
+    ["Taiwan Semiconductor Manufacturing", "2026-11-03"],
+  ],
+};
+
+function investmentTables(groups) {
+  const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
+  return [...groups].sort(([a], [b]) => {
+    if (a === "Industry unavailable") return 1;
+    if (b === "Industry unavailable") return -1;
+    return a.localeCompare(b);
+  }).map(([industry, holdings]) => {
+    const sorted = [...holdings].sort(([nameA, dateA], [nameB, dateB]) =>
+      (dateA || "9999").localeCompare(dateB || "9999") || nameA.localeCompare(nameB)
+    );
+    const rows = sorted.map(([name, date]) => {
+      const purchase = date ? `<time datetime="${esc(date)}">${esc(dateFormat.format(new Date(date)))}</time>` : "Unavailable";
+      return `<tr><th scope="row">${esc(name)}</th><td>${purchase}</td></tr>`;
+    }).join("");
+    return `
+      <table class="investment-table">
+        <caption>${esc(industry)}</caption>
+        <thead><tr><th scope="col">Company</th><th scope="col">First recorded purchase</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }).join("");
+}
+
 async function renderIndiaInvestments() {
   try {
     const response = await fetch("/investments/india.json");
     if (!response.ok) return;
     const rows = await response.json();
     if (!Array.isArray(rows) || rows.length === 0) return;
-    const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
-    const table = rows.map(({ name, date }) => {
-      const purchase = date ? `<time datetime="${esc(date)}">${esc(dateFormat.format(new Date(date)))}</time>` : "Unavailable";
-      return `<tr><th scope="row">${esc(name)}</th><td>${purchase}</td></tr>`;
-    }).join("");
-    $("indiaInvestments").innerHTML = `
-      <h2>India</h2>
-      <table class="investment-table">
-        <thead><tr><th scope="col">Company</th><th scope="col">First recorded purchase</th></tr></thead>
-        <tbody>${table}</tbody>
-      </table>`;
+    const groups = new Map();
+    for (const { name, date, industry } of rows) {
+      const label = industry || "Industry unavailable";
+      if (!groups.has(label)) groups.set(label, []);
+      groups.get(label).push([name, date]);
+    }
+    $("indiaInvestments").innerHTML = `<h2>India</h2>${investmentTables(groups)}`;
   } catch {
-    // Keep the other investment list available if the India feed fails.
+    // Keep the Robinhood list available if the India feed fails.
   }
 }
 
@@ -62,77 +175,13 @@ function investments() {
   return `
     <header class="page-intro">
       <h1>Investments</h1>
-      <p class="lead">Companies I currently hold and the earliest purchase date in my available Robinhood history.</p>
+      <p class="lead">Companies I currently hold, grouped by industry and ordered by first recorded purchase.</p>
     </header>
     <section id="indiaInvestments"></section>
-    <table class="investment-table" aria-label="Robinhood company investments">
-      <thead><tr><th scope="col">Company</th><th scope="col">First recorded purchase</th></tr></thead>
-      <tbody>
-<tr><th scope="row">Abbvie</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Advanced Micro Devices</th><td><time datetime="2026-07-08">Jul 8, 2026</time></td></tr>
-<tr><th scope="row">Alphabet</th><td><time datetime="2025-06-06">Jun 6, 2025</time></td></tr>
-<tr><th scope="row">Amazon.com</th><td><time datetime="2025-07-08">Jul 8, 2025</time></td></tr>
-<tr><th scope="row">Ambarella</th><td><time datetime="2026-06-08">Jun 8, 2026</time></td></tr>
-<tr><th scope="row">Apple</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">AST SpaceMobile</th><td><time datetime="2026-02-13">Feb 13, 2026</time></td></tr>
-<tr><th scope="row">Bloom Energy</th><td><time datetime="2026-10-13">Oct 13, 2026</time></td></tr>
-<tr><th scope="row">Broadcom</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Cadence Design Systems</th><td><time datetime="2026-04-20">Apr 20, 2026</time></td></tr>
-<tr><th scope="row">Chevron</th><td><time datetime="2026-01-21">Jan 21, 2026</time></td></tr>
-<tr><th scope="row">Cleanspark</th><td><time datetime="2025-10-16">Oct 16, 2025</time></td></tr>
-<tr><th scope="row">Cleveland-Cliffs</th><td><time datetime="2026-04-29">Apr 29, 2026</time></td></tr>
-<tr><th scope="row">Cloudflare</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Coherent</th><td><time datetime="2026-04-10">Apr 10, 2026</time></td></tr>
-<tr><th scope="row">Colgate-Palmolive</th><td><time datetime="2026-06-11">Jun 11, 2026</time></td></tr>
-<tr><th scope="row">Costco Wholesale</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Credo Technology Group Holding</th><td><time datetime="2026-04-10">Apr 10, 2026</time></td></tr>
-<tr><th scope="row">Crowdstrike Holdings</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">CSX</th><td><time datetime="2026-04-29">Apr 29, 2026</time></td></tr>
-<tr><th scope="row">Diamondback Energy</th><td><time datetime="2026-05-11">May 11, 2026</time></td></tr>
-<tr><th scope="row">Eagle Nuclear Energy</th><td><time datetime="2026-03-04">Mar 4, 2026</time></td></tr>
-<tr><th scope="row">Eaton Corporation</th><td><time datetime="2026-04-29">Apr 29, 2026</time></td></tr>
-<tr><th scope="row">Ecolab</th><td><time datetime="2026-06-08">Jun 8, 2026</time></td></tr>
-<tr><th scope="row">Entegris</th><td><time datetime="2026-06-18">Jun 18, 2026</time></td></tr>
-<tr><th scope="row">EOG Resources</th><td><time datetime="2026-09-15">Sep 15, 2026</time></td></tr>
-<tr><th scope="row">Flowserve</th><td><time datetime="2026-02-17">Feb 17, 2026</time></td></tr>
-<tr><th scope="row">Freeport-McMoRan</th><td><time datetime="2026-04-14">Apr 14, 2026</time></td></tr>
-<tr><th scope="row">Gap</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Gilead Sciences</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Intuitive Surgical</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">IonQ</th><td><time datetime="2026-03-24">Mar 24, 2026</time></td></tr>
-<tr><th scope="row">Joby Aviation</th><td><time datetime="2026-02-13">Feb 13, 2026</time></td></tr>
-<tr><th scope="row">Johnson &amp; Johnson</th><td><time datetime="2025-07-08">Jul 8, 2025</time></td></tr>
-<tr><th scope="row">Lam Research</th><td><time datetime="2025-07-08">Jul 8, 2025</time></td></tr>
-<tr><th scope="row">Lilly(Eli) &amp; Co</th><td><time datetime="2025-10-08">Oct 8, 2025</time></td></tr>
-<tr><th scope="row">Linde</th><td><time datetime="2026-03-20">Mar 20, 2026</time></td></tr>
-<tr><th scope="row">Lucid Group</th><td><time datetime="2025-07-18">Jul 18, 2025</time></td></tr>
-<tr><th scope="row">Merck &amp; Co</th><td><time datetime="2026-01-21">Jan 21, 2026</time></td></tr>
-<tr><th scope="row">Meta Platforms</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Microsoft</th><td><time datetime="2025-07-08">Jul 8, 2025</time></td></tr>
-<tr><th scope="row">Netflix</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Neurocrine Biosciences</th><td><time datetime="2025-10-08">Oct 8, 2025</time></td></tr>
-<tr><th scope="row">New Horizon Aircraft</th><td><time datetime="2026-05-12">May 12, 2026</time></td></tr>
-<tr><th scope="row">Nutanix</th><td><time datetime="2025-08-07">Aug 7, 2025</time></td></tr>
-<tr><th scope="row">NVIDIA</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Progressive</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Qualcomm</th><td><time datetime="2025-07-08">Jul 8, 2025</time></td></tr>
-<tr><th scope="row">Quantinuum</th><td><time datetime="2026-06-08">Jun 8, 2026</time></td></tr>
-<tr><th scope="row">Rare Earths Americas</th><td><time datetime="2026-05-12">May 12, 2026</time></td></tr>
-<tr><th scope="row">Reddit</th><td><time datetime="2026-11-03">Nov 3, 2026</time></td></tr>
-<tr><th scope="row">SEALSQ</th><td><time datetime="2026-05-27">May 27, 2026</time></td></tr>
-<tr><th scope="row">Serve Robotics</th><td><time datetime="2026-03-24">Mar 24, 2026</time></td></tr>
-<tr><th scope="row">ServiceNow</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Shopify</th><td><time datetime="2026-07-08">Jul 8, 2026</time></td></tr>
-<tr><th scope="row">Space Exploration Technologies</th><td><time datetime="2026-10-15">Oct 15, 2026</time></td></tr>
-<tr><th scope="row">Spotify Technology</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-<tr><th scope="row">Taiwan Semiconductor Manufacturing</th><td><time datetime="2026-11-03">Nov 3, 2026</time></td></tr>
-<tr><th scope="row">Tesla</th><td><time datetime="2025-05-27">May 27, 2025</time></td></tr>
-<tr><th scope="row">Trane Technologies</th><td><time datetime="2026-09-15">Sep 15, 2026</time></td></tr>
-<tr><th scope="row">Verisign</th><td><time datetime="2026-04-20">Apr 20, 2026</time></td></tr>
-<tr><th scope="row">Vertex Pharmaceuticals</th><td><time datetime="2026-09-22">Sep 22, 2026</time></td></tr>
-<tr><th scope="row">Visa</th><td><time datetime="2025-05-30">May 30, 2025</time></td></tr>
-      </tbody>
-    </table>`;
+    <section>
+      <h2>Robinhood</h2>
+      ${investmentTables(Object.entries(investmentIndustries))}
+    </section>`;
 }
 
 function views() {
