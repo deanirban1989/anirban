@@ -18,5 +18,5 @@ jobs:
           node-version: '22'
       - run: node .github/scripts/publish-investment-snapshot.mjs
         env:
-          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL || 'https://vpvwpcoctjuejaclqger.supabase.co' }}
           SUPABASE_SNAPSHOT_WRITER_KEY: ${{ secrets.SUPABASE_SNAPSHOT_WRITER_KEY }}
