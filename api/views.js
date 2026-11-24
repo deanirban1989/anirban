@@ -1,4 +1,4 @@
-const fields = "slug,title,topic,summary,body";
+const fields = "slug,title,topic,summary";
 
 module.exports = async function handler(req, res) {
   if (req.method !== "GET") {
@@ -13,11 +13,16 @@ module.exports = async function handler(req, res) {
 
   try {
     const url = new URL("/rest/v1/site_articles", SUPABASE_URL);
+    const slug = req.query?.article;
+    if (slug !== undefined && (typeof slug !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug))) {
+      return res.status(400).json({ error: "Invalid article." });
+    }
     url.search = new URLSearchParams({
-      select: fields,
+      select: slug ? fields + ",body" : fields,
+      ...(slug ? { slug: "eq." + slug } : {}),
       published: "eq.true",
       order: "sort_order.asc,slug.asc",
-      limit: "100",
+      limit: slug ? "1" : "100",
     }).toString();
     const response = await fetch(url, {
       headers: { apikey: SUPABASE_PUBLISHABLE_KEY },
