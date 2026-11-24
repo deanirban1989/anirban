@@ -130,7 +130,88 @@ const investmentIndustries = {
   ],
 };
 
-function investmentTables(groups, dateHeading = "First recorded purchase", nameHeading = "Company") {
+const unrealizedReturns = {
+  "NVIDIA": -9.9,
+  "Alphabet": -23.6,
+  "Microsoft": 16.3,
+  "Tesla": 5.2,
+  "AST SpaceMobile": -63.5,
+  "New Horizon Aircraft": -65.7,
+  "SEALSQ": -73,
+  "Joby Aviation": -64.3,
+  "Cleanspark": -60.2,
+  "Eagle Nuclear Energy": -69.6,
+  "IonQ": -50,
+  "Lucid Group": -78.6,
+  "Meta Platforms": -7.1,
+  "Serve Robotics": -74.7,
+  "Rare Earths Americas": -84.9,
+  "Quantinuum": -25,
+  "Netflix": -13.6,
+  "Space Exploration Technologies": -12,
+  "Crowdstrike Holdings": -15.5,
+  "Reddit": -3.4,
+  "Broadcom": -7.9,
+  "Apple": 4.4,
+  "Amazon.com": -3,
+  "Colgate-Palmolive": 9,
+  "Lilly(Eli) & Co": 19.8,
+  "Costco Wholesale": 11,
+  "Ecolab": 11.2,
+  "Cloudflare": -10.6,
+  "Abbvie": 10.9,
+  "Eaton Corporation": -17.2,
+  "Chevron": -4.6,
+  "Diamondback Energy": -17.9,
+  "Verisign": 4.8,
+  "Credo Technology Group Holding": -18.9,
+  "Neurocrine Biosciences": -2.9,
+  "Flowserve": -2.7,
+  "Linde": 10.3,
+  "Visa": 9.3,
+  "Johnson & Johnson": -1,
+  "Gilead Sciences": 17.6,
+  "Advanced Micro Devices": -16.1,
+  "Vertex Pharmaceuticals": 4.4,
+  "Nutanix": -12.6,
+  "Qualcomm": -36.4,
+  "Progressive": 0.5,
+  "Spotify Technology": -4.1,
+  "Intuitive Surgical": -11.8,
+  "CSX": 2.4,
+  "Trane Technologies": -3.6,
+  "Shopify": 1.4,
+  "EOG Resources": -4.3,
+  "Coherent": -33.2,
+  "Entegris": -12,
+  "Lam Research": -34.2,
+  "ServiceNow": -28.9,
+  "Merck & Co": -6.2,
+  "Cadence Design Systems": -9.4,
+  "Ambarella": -14.1,
+  "Freeport-McMoRan": -27.7,
+  "Cleveland-Cliffs": -18.3,
+  "Gap": 3.4,
+  "Bloom Energy": -32.8,
+  "Taiwan Semiconductor Manufacturing": -11.4,
+  "Vanguard S&P 500 ETF (VOO)": 9.9,
+  "Invesco QQQ Trust Series 1 (QQQ)": -4.3,
+  "Vanguard Information Technology ETF (VGT)": 44.4,
+  "VanEck Semiconductor ETF (SMH)": -13.1,
+  "iShares Core S&P 500 ETF (IVV)": -6.9,
+  "iShares 0-3 Month Treasury Bond ETF (SGOV)": 0,
+  "Xtrackers Harvest CSI 300 China A-Shares ETF (ASHR)": -13.9,
+  "iShares Russell 2000 Index Fund (IWM)": -8.1,
+  "WisdomTree Japan Hedged Equity Fund (DXJ)": -5.3,
+  "IShares MSCI Emerging Markets ex China ETF (EMXC)": -13.1,
+  "State Street SPDR EURO Stoxx 50 ETF (FEZ)": -8,
+  "State Street SPDR S&P Aerospace & Defense ETF (XAR)": -19.7,
+  "SPDR Gold Shares (GLD)": -19.5,
+  "VanEck Rare Earth/Strategic Metals ETF (REMX)": -51.1
+};
+const returnSnapshotDate = "November 24, 2026";
+
+function investmentTables(groups, dateHeading = "First recorded purchase", nameHeading = "Company", showReturn = false) {
   const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
   return [...groups].sort(([a], [b]) => {
     if (a === "Industry unavailable") return 1;
@@ -142,13 +223,16 @@ function investmentTables(groups, dateHeading = "First recorded purchase", nameH
     );
     const rows = sorted.map(([name, date]) => {
       const purchase = date ? `<time datetime="${esc(date)}">${esc(dateFormat.format(new Date(date)))}</time>` : "Unavailable";
-      return `<tr><th scope="row">${esc(name)}</th><td>${purchase}</td></tr>`;
+      const value = unrealizedReturns[name];
+      const quotedReturn = Number.isFinite(value) ? `${value > 0 ? "+" : ""}${value.toFixed(1)}%` : "—";
+      const returnCell = showReturn ? `<td class="investment-return">${quotedReturn}</td>` : "";
+      return `<tr><th scope="row">${esc(name)}</th><td>${purchase}</td>${returnCell}</tr>`;
     }).join("");
     return `
       <div class="industry-card" data-industry="${esc(industry)}">
       <table class="investment-table">
         <caption>${esc(industry)} <span>${holdings.length}</span></caption>
-        <thead><tr><th scope="col">${esc(nameHeading)}</th><th scope="col">${esc(dateHeading)}</th></tr></thead>
+        <thead><tr><th scope="col">${esc(nameHeading)}</th><th scope="col">${esc(dateHeading)}</th>${showReturn ? '<th scope="col">Unrealized return</th>' : ""}</tr></thead>
         <tbody>${rows}</tbody>
       </table></div>`;
   }).join("");
@@ -274,7 +358,7 @@ function investments() {
     ${ventureInvestments()}
     <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab" hidden>
       <div class="investment-section-header">
-        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry.</p></div>
+        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of ${returnSnapshotDate}.</p></div>
         <label>Filter by industry
           <select id="investmentIndustry">
             <option value="">All industries</option>
@@ -282,12 +366,13 @@ function investments() {
           </select>
         </label>
       </div>
-      <div class="investment-grid">${investmentTables(groups)}</div>
+      <div class="investment-grid">${investmentTables(groups, "First recorded purchase", "Company", true)}</div>
       <section id="indiaInvestments"></section>
     </section>
     <section id="etfs" role="tabpanel" aria-labelledby="etfs-tab" class="public-equities" hidden>
       <h2>ETFs</h2>
-      ${investmentTables([["Exchange-traded funds", etfHoldings]], "First recorded purchase", "Fund")}
+      <p>Unrealized returns as of ${returnSnapshotDate}.</p>
+      ${investmentTables([["Exchange-traded funds", etfHoldings]], "First recorded purchase", "Fund", true)}
     </section>`;
 }
 
