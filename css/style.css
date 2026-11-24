@@ -279,3 +279,13 @@ body .skip-link:focus {
   font: inherit;
 }
 .holdings-status { margin: 12px 0; color: var(--muted); font-size: 14px; }
+
+.article-list { display: grid; gap: 16px; padding: 30px 0 75px; }
+.article-preview { min-height: auto; scroll-margin-top: 85px; }
+.article-preview .kicker, .article-reading .kicker { color: var(--teal); margin-bottom: 10px; }
+.article-preview h2 { margin: 4px 0 10px; }
+.article-preview h2 a:hover { color: var(--teal); }
+.article-preview p:last-child { margin-bottom: 0; }
+.article-reading { padding-top: 46px; }
+.article-reading .kicker { margin-top: 24px; font-size: 14px; }
+.article-reading h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); }
