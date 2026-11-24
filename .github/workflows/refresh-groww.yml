@@ -2,7 +2,7 @@ name: Refresh Groww holdings
 
 on:
   schedule:
-    - cron: '37 16 * * 5'
+    - cron: '37 16 * * *'
   workflow_dispatch:
 
 permissions:
