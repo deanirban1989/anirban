@@ -1,7 +1,33 @@
 {
   "redirects": [
-    { "source": "/contact", "destination": "/#siteFooter", "permanent": true },
-    { "source": "/contact/", "destination": "/#siteFooter", "permanent": true },
-    { "source": "/contact/index.html", "destination": "/#siteFooter", "permanent": true }
+    {
+      "source": "/contact",
+      "destination": "/#siteFooter",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/#siteFooter",
+      "permanent": true
+    },
+    {
+      "source": "/contact/index.html",
+      "destination": "/#siteFooter",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/views",
+      "destination": "/api/views-page"
+    },
+    {
+      "source": "/views/",
+      "destination": "/api/views-page"
+    },
+    {
+      "source": "/views/index.html",
+      "destination": "/api/views-page"
+    }
   ]
 }
