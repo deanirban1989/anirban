@@ -165,3 +165,54 @@ body .skip-link:focus {
 .venture-investments summary { cursor: pointer; font-weight: 650; }
 .venture-investments .pill-list { list-style: none; padding: 0; }
 .venture-investments .pill-list li { padding: 6px 10px; background: var(--soft); border-radius: 6px; }
+
+.investment-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 28px;
+  margin-top: 36px;
+  padding: clamp(28px, 5vw, 60px);
+  background: radial-gradient(ellipse at 100% 0%, #314a86, transparent 70%), #101b32;
+  color: #fff;
+  border-radius: 22px;
+}
+.investment-hero h1 { margin-bottom: 16px; font-size: clamp(2.65rem, 6vw, 5.4rem); }
+.investment-hero p { max-width: 500px; color: #d5e1f7; }
+.investment-hero nav { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+.investment-hero nav a { padding: 6px 12px; border: 1px solid #7287b2; border-radius: 7px; font-size: 14px; }
+.investment-hero nav a:hover { background: #314a86; }
+.investment-overview { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
+.investment-overview div { display: flex; flex-direction: column-reverse; padding: 12px; background: #ffffff12; border-radius: 10px; }
+.investment-overview dt { color: #d5e1f7; font-size: 14px; }
+.investment-overview dd { margin: 0; font-size: 2rem; line-height: 1.15; font-weight: 750; font-variant-numeric: tabular-nums; }
+.public-equities, .venture-investments { scroll-margin-top: 85px; }
+#indiaInvestments + .public-equities { padding: 42px 0; }
+.investment-section-header { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 16px; margin-bottom: 22px; }
+.investment-section-header h2 { margin-bottom: 9px; }
+.investment-section-header p { margin: 0; color: var(--muted); }
+.investment-section-header label { display: grid; gap: 4px; font-size: 14px; font-weight: 650; max-width: 100%; }
+.investment-section-header select { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 7px; padding: 9px; max-width: 100%; }
+.investment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 16px; }
+.industry-card { border: 1px solid var(--line); border-radius: 13px; overflow: hidden; background: var(--paper); }
+.industry-card .investment-table { margin: 0; font-size: 14px; }
+.industry-card caption { padding: 14px; border-bottom: 1px solid var(--line); font-size: 1rem; color: var(--teal); }
+.industry-card caption span { display: inline-block; padding: 0 7px; margin-left: 4px; border-radius: 20px; background: #eaf0ff; font-size: 13px; }
+.industry-card th, .industry-card td { padding: 8px 12px; }
+.industry-card th { overflow-wrap: anywhere; }
+.industry-card thead th:last-child, .industry-card td { text-align: right; }
+.industry-card tbody tr:last-child th, .industry-card tbody tr:last-child td { border-bottom: 0; }
+.industry-card td { font-variant-numeric: tabular-nums; }
+.venture-investments { margin-bottom: 40px; padding: clamp(20px, 4vw, 38px); background: var(--soft); border-radius: 18px; }
+.venture-investments h2 { margin-bottom: 12px; }
+.venture-investments > p { color: var(--muted); }
+.venture-investments details { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.venture-investments details + details { margin-top: 10px; }
+.venture-investments .investment-grid { margin-top: 12px; }
+@media (max-width: 1100px) {
+  .investment-hero { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .investment-grid { grid-template-columns: 1fr; }
+  .investment-hero { margin-top: 20px; }
+}

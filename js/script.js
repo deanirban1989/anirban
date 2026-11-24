@@ -145,11 +145,12 @@ function investmentTables(groups, dateHeading = "First recorded purchase") {
       return `<tr><th scope="row">${esc(name)}</th><td>${purchase}</td></tr>`;
     }).join("");
     return `
+      <div class="industry-card" data-industry="${esc(industry)}">
       <table class="investment-table">
-        <caption>${esc(industry)}</caption>
+        <caption>${esc(industry)} <span>${holdings.length}</span></caption>
         <thead><tr><th scope="col">Company</th><th scope="col">${esc(dateHeading)}</th></tr></thead>
         <tbody>${rows}</tbody>
-      </table>`;
+      </table></div>`;
   }).join("");
 }
 
@@ -165,7 +166,7 @@ async function renderIndiaInvestments() {
       if (!groups.has(label)) groups.set(label, []);
       groups.get(label).push([name, date]);
     }
-    $("indiaInvestments").innerHTML = `<h2>India</h2>${investmentTables(groups)}`;
+    $("indiaInvestments").innerHTML = `<h2>India</h2><div class="investment-grid">${investmentTables(groups)}</div>`;
   } catch {
     // Keep the Robinhood list available if the India feed fails.
   }
@@ -176,7 +177,7 @@ const earlyStageHoldings = {"Communication Services":[["Formative Intelligence I
 function ventureInvestments() {
   const growthCompanies = ["Airwallex", "Boom Supersonic", "Canva", "Cognition", "Crusoe", "Databricks", "ElevenLabs", "Erebor", "Mercor", "OpenAI", "Oura", "Ramp", "Revolut", "SpaceX", "Stripe", "Whatnot"];
   return `
-    <section class="venture-investments">
+    <section class="venture-investments" id="venture">
       <h2>Venture investments</h2>
       <p>Company exposure through two venture funds. Holdings reported as of September 30, 2026.</p>
       <details>
@@ -187,23 +188,56 @@ function ventureInvestments() {
       <details>
         <summary>Early-stage companies</summary>
         <p><a class="text-link" href="https://www.sec.gov/Archives/edgar/data/2131040/000213104026000013/rvii-20260930.htm">Early-stage fund disclosure</a></p>
-        ${investmentTables(Object.entries(earlyStageHoldings), "Fund acquisition date")}
+        <div class="investment-grid">${investmentTables(Object.entries(earlyStageHoldings), "Fund acquisition date")}</div>
       </details>
     </section>`;
 }
 
 function investments() {
+  const groups = Object.entries(investmentIndustries);
+  const companyCount = groups.reduce((total, [, holdings]) => total + holdings.length, 0);
   return `
-    <header class="page-intro">
-      <h1>Investments</h1>
-      <p class="lead">Companies I currently hold, grouped by industry and ordered by first recorded purchase.</p>
+    <header class="investment-hero">
+      <div>
+        <h1>Investments</h1>
+        <p>My public equity holdings and the companies I have exposure to through venture funds.</p>
+        <nav aria-label="Investment sections">
+          <a href="#public-equities">Public equities</a>
+          <a href="#venture">Venture investments</a>
+        </nav>
+      </div>
+      <dl class="investment-overview">
+        <div><dt>Public companies</dt><dd>${companyCount}</dd></div>
+        <div><dt>Industry groups</dt><dd>${groups.length}</dd></div>
+      </dl>
     </header>
     <section id="indiaInvestments"></section>
-    <section>
-      <h2>Public equities</h2>
-      ${investmentTables(Object.entries(investmentIndustries))}
+    <section id="public-equities" class="public-equities">
+      <div class="investment-section-header">
+        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry.</p></div>
+        <label>Filter by industry
+          <select id="investmentIndustry">
+            <option value="">All industries</option>
+            ${groups.map(([industry]) => `<option value="${esc(industry)}">${esc(industry)}</option>`).join("")}
+          </select>
+        </label>
+      </div>
+      <div class="investment-grid">${investmentTables(groups)}</div>
     </section>
     ${ventureInvestments()}`;
+}
+
+function setupInvestments() {
+  const industry = $("investmentIndustry");
+  const cards = $("public-equities").querySelectorAll("[data-industry]");
+  industry.addEventListener("change", () => {
+    for (const card of cards) {
+      card.hidden = Boolean(industry.value && card.dataset.industry !== industry.value);
+    }
+  });
+  renderIndiaInvestments();
+  const section = window.location.hash.slice(1);
+  if (section) $(section)?.scrollIntoView();
 }
 
 function views() {
@@ -246,7 +280,7 @@ function contact(data) {
 }
 
 function init(d){$("siteHeader").innerHTML='<nav class="site-nav shell"><a class="wordmark" href="/"><span class="monogram">AD</span><span class="brand-name">'+esc(d.name)+'</span></a><button id="menuToggle" class="menu-toggle" aria-controls="navItems" aria-label="Toggle navigation" aria-expanded="false">Menu</button><div class="nav-items" id="navItems">'+nav.map(([id,url,label])=>'<a '+(page===id?'aria-current="page"':'')+' href="'+url+'">'+label+'</a>').join("")+'<a class="nav-resume" href="/'+esc(d.resumeFile)+'" download>Résumé PDF</a></div></nav>';$("menuToggle").onclick=()=>{const open=$("navItems").classList.toggle("is-open");$("menuToggle").setAttribute("aria-expanded",String(open))};$("siteFooter").innerHTML='<div class="shell footer-row"><span>© '+new Date().getFullYear()+' '+esc(d.name)+'</span><a href="/contact/">Get in touch</a></div>';const exp=d.experience||[],ach=d.achievements||[];const link=(url,label,cls="text-link")=>'<a class="'+cls+'" href="'+url+'">'+label+'</a>';const intro=(kicker,title,desc)=>'<header class="page-intro"><p class="kicker">'+kicker+'</p><h1>'+title+'</h1><p class="lead">'+desc+'</p></header>';const job=j=>'<article class="career-row"><div><p class="eyeline">'+esc(j.date)+'</p><h2>'+esc(j.org)+'</h2><p class="job-role">'+esc(j.role)+'</p></div><ul>'+j.bullets.map(b=>'<li>'+esc(clean(b))+'</li>').join("")+'</ul></article>';const detailLink=a=>a.title.includes("Risk Central")?"/work/risk-central/":a.title.includes("access reviews")?"/work/access-reviews/":null;const card=a=>'<article class="work-card case-study"><p class="case-category">'+esc(a.category||"Selected work")+'</p><h2>'+esc(a.title)+'</h2><p class="case-status">'+esc(a.status||"")+'</p><div class="case-detail"><strong>The challenge</strong><p>'+esc(a.context||"")+'</p></div><div class="case-detail"><strong>What I did</strong><p>'+esc(a.action||"")+'</p></div><div class="case-detail"><strong>Outcome</strong><p>'+esc(a.impact||a.text||"")+'</p></div>'+(detailLink(a)?'<a class="text-link case-link" href="'+detailLink(a)+'">Read case study</a>':'')+'</article>';let out="";switch(page){case"home":out=home(d,link);break;case"about":out=intro("ABOUT ME","About Anirban De","I’m a founder, security leader, and investor based in the San Francisco Bay Area.")+'<section class="reading"><h2>What drives my work</h2><p>I founded <a class="text-link" href="https://grc-os.dev/">grcOS</a> to give security teams one place to run risk and compliance. My work at Replit and Uber has focused on turning enterprise security requirements into tools teams can use every day.</p><p>'+esc(clean(d.about))+'</p><p>I’ve spent more than 14 years working with teams that need to balance speed, security and trust. I enjoy translating technical challenges into clear decisions and building systems that make the right thing easier to do.</p><h2>How I approach problems</h2><p>Start with the people affected. Understand what is getting in their way. Build something useful, measure whether it helps, and keep improving it.</p>'+link("/work/","See examples of my work")+'</section>';break;case"work":out=intro("SELECTED WORK","Security","Case studies and outcomes from building security programs and software at Replit and Uber.")+'<section class="work-grid work-index">'+ach.map(card).join("")+'</section><section class="closing"><h2>Interested in building something better?</h2>'+link("/contact/","Let's connect","button-primary")+'</section>';break;case"career":out=intro("CAREER","Where I’ve worked.","My path has taken me from consulting to leading security programs and building tools that make them work better.")+'<section class="career-list">'+exp.map(job).join("")+'</section><section class="expertise"><p class="kicker">AREAS OF EXPERTISE</p><h2>What I work on</h2><div class="pill-list">'+(d.skills||[]).map(s=>'<span>'+esc(s)+'</span>').join("")+'</div></section><section class="closing"><h2>Want the full details?</h2>'+link("/"+esc(d.resumeFile),"Download my résumé","button-primary")+'</section>';break;case"investments":out=investments();break;case"views":out=views();break;case"contact":out=contact(d);break;} $("pageContent").innerHTML=out;
-  if (page === "investments") renderIndiaInvestments();
+  if (page === "investments") setupInvestments();
   if (page === "views") {
     const topic = window.location.hash.slice(1);
     if (topic) $(topic)?.scrollIntoView();
