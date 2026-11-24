@@ -216,3 +216,18 @@ body .skip-link:focus {
   .investment-grid { grid-template-columns: 1fr; }
   .investment-hero { margin-top: 20px; }
 }
+
+@media (min-width: 1160px) {
+  body[data-page="investments"] #pageContent {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: 24px;
+  }
+  .investment-hero, #indiaInvestments { grid-column: 1 / -1; }
+  .venture-investments { grid-column: 1; grid-row: 2; margin-top: 0 !important; }
+  #indiaInvestments { grid-row: 3; }
+  #indiaInvestments:empty { display: none; }
+  #indiaInvestments + .public-equities { grid-column: 2; grid-row: 2; padding-top: 0; }
+  .venture-investments .investment-grid, .public-equities .investment-grid { grid-template-columns: 1fr; }
+}
