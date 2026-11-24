@@ -228,25 +228,6 @@ async function renderIndiaInvestments() {
   }
 }
 
-function ventureInvestments() {
-  const growthCompanies = ["Airwallex", "Boom Supersonic", "Canva", "Cognition", "Crusoe", "Databricks", "ElevenLabs", "Erebor", "Mercor", "OpenAI", "Oura", "Ramp", "Revolut", "SpaceX", "Stripe", "Whatnot"];
-  return `
-    <section class="venture-investments" id="venture" role="tabpanel" aria-labelledby="venture-tab" hidden>
-      <h2>Venture investments</h2>
-      <p>Company exposure through two venture funds. Holdings reported as of September 30, 2026.</p>
-      <details>
-        <summary>Growth-stage companies (${growthCompanies.length})</summary>
-        <ul class="pill-list">${growthCompanies.map(name => `<li>${esc(name)}</li>`).join("")}</ul>
-        <p><a class="text-link" href="https://robinhood.com/us/en/stocks/RVI/">Growth-stage fund disclosure</a></p>
-      </details>
-      <details id="earlyStageVenture">
-        <summary>Early-stage companies</summary>
-        <p><a class="text-link" href="https://www.sec.gov/Archives/edgar/data/2131040/000213104026000013/rvii-20260930.htm">Early-stage fund disclosure</a></p>
-        <div class="investment-grid" id="earlyStageHoldings"></div>
-      </details>
-    </section>`;
-}
-
 let etfHoldings = [
   [
     "Vanguard S&P 500 ETF (VOO)",
@@ -306,30 +287,6 @@ let etfHoldings = [
   ]
 ];
 
-function investmentControls(placeholder, industries = []) {
-  return `
-    <div class="investment-controls">
-      <label>Search holdings
-        <input type="search" data-holdings-search placeholder="${placeholder}">
-      </label>
-      ${industries.length ? `<label>Industry
-        <select data-holdings-industry>
-          <option value="">All industries</option>
-          ${industries.map(([name]) => `<option value="${esc(name)}">${esc(name)}</option>`).join("")}
-        </select>
-      </label>` : ""}
-      <label>Sort by
-        <select data-holdings-sort>
-          <option value="oldest">Oldest purchase</option>
-          <option value="newest">Newest purchase</option>
-          <option value="highest">Highest unrealized return</option>
-          <option value="lowest">Lowest unrealized return</option>
-        </select>
-      </label>
-    </div>
-    <p data-holdings-status class="holdings-status" role="status"></p>`;
-}
-
 function setupHoldingsExplorer(panel, groups, nameHeading) {
   const search = panel.querySelector("[data-holdings-search]");
   const industry = panel.querySelector("[data-holdings-industry]");
@@ -352,7 +309,6 @@ function setupHoldingsExplorer(panel, groups, nameHeading) {
   search.addEventListener("input", update);
   industry?.addEventListener("change", update);
   sort.addEventListener("change", update);
-  update();
   return nextGroups => {
     groups = nextGroups;
     if (industry) {
@@ -388,43 +344,6 @@ async function loadInvestmentSnapshot() {
   } catch {
     // The bundled snapshot remains available when Supabase cannot be reached.
   }
-}
-
-function investments() {
-  const groups = Object.entries(investmentIndustries);
-  const companyCount = groups.reduce((total, [, holdings]) => total + holdings.length, 0);
-  return `
-    <header class="investment-hero">
-      <div>
-        <h1>Investments</h1>
-        <p>My public equity holdings and the companies I have exposure to through venture funds.</p>
-        <p id="investmentRefreshedAt" hidden></p>
-      </div>
-      <dl class="investment-overview">
-        <div><dt>Public companies</dt><dd id="investmentCompanyCount">${companyCount}</dd></div>
-        <div><dt>Industry groups</dt><dd id="investmentIndustryCount">${groups.length}</dd></div>
-      </dl>
-    </header>
-    <div class="investment-tabs" role="tablist" aria-label="Investment categories">
-      <button type="button" role="tab" id="public-equities-tab" aria-selected="true" aria-controls="public-equities">Public equities</button>
-      <button type="button" role="tab" id="etfs-tab" aria-selected="false" aria-controls="etfs" tabindex="-1">ETFs</button>
-      <button type="button" role="tab" id="venture-tab" aria-selected="false" aria-controls="venture" tabindex="-1">Venture investments</button>
-    </div>
-    <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab">
-      <div class="investment-section-header">
-        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of <span data-return-snapshot-date>${returnSnapshotDate}</span>.</p></div>
-      </div>
-      ${investmentControls("Company name", groups)}
-      <div class="investment-grid" data-holdings-results></div>
-      <section id="indiaInvestments"></section>
-    </section>
-    <section id="etfs" role="tabpanel" aria-labelledby="etfs-tab" class="public-equities" hidden>
-      <h2>ETFs</h2>
-      <p>Unrealized returns as of <span data-return-snapshot-date>${returnSnapshotDate}</span>.</p>
-      ${investmentControls("Fund name or ticker")}
-      <div data-holdings-results></div>
-    </section>
-    ${ventureInvestments()}`;
 }
 
 function setupInvestments() {
@@ -504,6 +423,5 @@ function setupInvestments() {
   window.addEventListener("hashchange", showLinkedTab);
 }
 
-  $("pageContent").innerHTML = investments();
   setupInvestments();
 }
