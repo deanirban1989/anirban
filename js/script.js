@@ -177,7 +177,7 @@ const earlyStageHoldings = {"Communication Services":[["Formative Intelligence I
 function ventureInvestments() {
   const growthCompanies = ["Airwallex", "Boom Supersonic", "Canva", "Cognition", "Crusoe", "Databricks", "ElevenLabs", "Erebor", "Mercor", "OpenAI", "Oura", "Ramp", "Revolut", "SpaceX", "Stripe", "Whatnot"];
   return `
-    <section class="venture-investments" id="venture">
+    <section class="venture-investments" id="venture" style="margin-top: 24px">
       <h2>Venture investments</h2>
       <p>Company exposure through two venture funds. Holdings reported as of September 30, 2026.</p>
       <details>
@@ -202,8 +202,8 @@ function investments() {
         <h1>Investments</h1>
         <p>My public equity holdings and the companies I have exposure to through venture funds.</p>
         <nav aria-label="Investment sections">
-          <a href="#public-equities">Public equities</a>
           <a href="#venture">Venture investments</a>
+          <a href="#public-equities">Public equities</a>
         </nav>
       </div>
       <dl class="investment-overview">
@@ -211,6 +211,7 @@ function investments() {
         <div><dt>Industry groups</dt><dd>${groups.length}</dd></div>
       </dl>
     </header>
+    ${ventureInvestments()}
     <section id="indiaInvestments"></section>
     <section id="public-equities" class="public-equities">
       <div class="investment-section-header">
@@ -223,8 +224,7 @@ function investments() {
         </label>
       </div>
       <div class="investment-grid">${investmentTables(groups)}</div>
-    </section>
-    ${ventureInvestments()}`;
+    </section>`;
 }
 
 function setupInvestments() {
