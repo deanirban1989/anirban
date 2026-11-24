@@ -41,7 +41,7 @@ function home(data, link) {
       <p class="kicker">Founder · Security leader · Investor</p>
       <h1>${esc(data.name)}</h1>
       <p class="lead">I build security software, lead security programs, and invest with a long-term perspective.</p>
-      <p class="bio-summary">I founded grcOS to make risk and compliance easier to run. At Replit, I build security automation for an AI developer platform. Before that, I led risk management and control assurance at Uber.</p>
+      <p class="bio-summary">I founded grcOS to make risk and compliance easier to run. At Replit, I lead GRC Engineering. Before that, I led risk management and control assurance at Uber.</p>
       <div class="actions">
         ${link("https://grc-os.dev/", "Visit grcOS", "button-primary")}
         ${link("/about/", "More about me", "button-secondary")}
