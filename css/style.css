@@ -150,3 +150,9 @@ body .skip-link:focus {
 @media (max-width: 760px) {
   .identity-grid, .contact-options a { grid-template-columns: 1fr; }
 }
+
+.investment-table { width: 100%; border-collapse: collapse; margin: 26px 0 64px; text-align: left; }
+.investment-table th, .investment-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); }
+.investment-table thead { background: var(--soft); }
+.investment-table tbody th { font-weight: 600; }
+.investment-table td { white-space: nowrap; color: var(--muted); }
