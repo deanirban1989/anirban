@@ -213,16 +213,24 @@ const unrealizedReturns = {
 };
 const returnSnapshotDate = "November 24, 2026";
 
-function investmentTables(groups, dateHeading = "First recorded purchase", nameHeading = "Company", showReturn = false) {
+function investmentTables(groups, dateHeading = "First recorded purchase", nameHeading = "Company", showReturn = false, sort = "oldest") {
   const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
   return [...groups].sort(([a], [b]) => {
     if (a === "Industry unavailable") return 1;
     if (b === "Industry unavailable") return -1;
     return a.localeCompare(b);
   }).map(([industry, holdings]) => {
-    const sorted = [...holdings].sort(([nameA, dateA], [nameB, dateB]) =>
-      (dateA || "9999").localeCompare(dateB || "9999") || nameA.localeCompare(nameB)
-    );
+    const sorted = [...holdings].sort(([nameA, dateA], [nameB, dateB]) => {
+      if (sort === "highest" || sort === "lowest") {
+        const a = unrealizedReturns[nameA];
+        const b = unrealizedReturns[nameB];
+        if (Number.isFinite(a) !== Number.isFinite(b)) return Number.isFinite(a) ? -1 : 1;
+        if (Number.isFinite(a) && a !== b) return sort === "highest" ? b - a : a - b;
+      }
+      if (Boolean(dateA) !== Boolean(dateB)) return dateA ? -1 : 1;
+      const chronological = (dateA ?? "").localeCompare(dateB ?? "");
+      return (sort === "newest" ? -chronological : chronological) || nameA.localeCompare(nameB);
+    });
     const rows = sorted.map(([name, date]) => {
       const purchase = date ? `<time datetime="${esc(date)}">${esc(dateFormat.format(new Date(date)))}</time>` : "Unavailable";
       const value = unrealizedReturns[name];
@@ -339,6 +347,55 @@ const etfHoldings = [
   ]
 ];
 
+function investmentControls(placeholder, industries = []) {
+  return `
+    <div class="investment-controls">
+      <label>Search holdings
+        <input type="search" data-holdings-search placeholder="${placeholder}">
+      </label>
+      ${industries.length ? `<label>Industry
+        <select data-holdings-industry>
+          <option value="">All industries</option>
+          ${industries.map(([name]) => `<option value="${esc(name)}">${esc(name)}</option>`).join("")}
+        </select>
+      </label>` : ""}
+      <label>Sort by
+        <select data-holdings-sort>
+          <option value="oldest">Oldest purchase</option>
+          <option value="newest">Newest purchase</option>
+          <option value="highest">Highest unrealized return</option>
+          <option value="lowest">Lowest unrealized return</option>
+        </select>
+      </label>
+    </div>
+    <p data-holdings-status class="holdings-status" role="status"></p>`;
+}
+
+function setupHoldingsExplorer(panel, groups, nameHeading) {
+  const search = panel.querySelector("[data-holdings-search]");
+  const industry = panel.querySelector("[data-holdings-industry]");
+  const sort = panel.querySelector("[data-holdings-sort]");
+  const results = panel.querySelector("[data-holdings-results]");
+  const status = panel.querySelector("[data-holdings-status]");
+
+  function update() {
+    const query = search.value.trim().toLocaleLowerCase("en");
+    const matches = groups
+      .filter(([label]) => !industry?.value || industry.value === label)
+      .map(([label, holdings]) => [label, holdings.filter(([name]) =>
+        name.toLocaleLowerCase("en").includes(query))])
+      .filter(([, holdings]) => holdings.length);
+    const count = matches.reduce((total, [, holdings]) => total + holdings.length, 0);
+    results.innerHTML = investmentTables(matches, "First recorded purchase", nameHeading, true, sort.value);
+    status.textContent = count ? `${count} ${count === 1 ? "holding" : "holdings"}` : "No holdings match your filters.";
+  }
+
+  search.addEventListener("input", update);
+  industry?.addEventListener("change", update);
+  sort.addEventListener("change", update);
+  update();
+}
+
 function investments() {
   const groups = Object.entries(investmentIndustries);
   const companyCount = groups.reduce((total, [, holdings]) => total + holdings.length, 0);
@@ -361,32 +418,23 @@ function investments() {
     <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab">
       <div class="investment-section-header">
         <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of ${returnSnapshotDate}.</p></div>
-        <label>Filter by industry
-          <select id="investmentIndustry">
-            <option value="">All industries</option>
-            ${groups.map(([industry]) => `<option value="${esc(industry)}">${esc(industry)}</option>`).join("")}
-          </select>
-        </label>
       </div>
-      <div class="investment-grid">${investmentTables(groups, "First recorded purchase", "Company", true)}</div>
+      ${investmentControls("Company name", groups)}
+      <div class="investment-grid" data-holdings-results></div>
       <section id="indiaInvestments"></section>
     </section>
     <section id="etfs" role="tabpanel" aria-labelledby="etfs-tab" class="public-equities" hidden>
       <h2>ETFs</h2>
       <p>Unrealized returns as of ${returnSnapshotDate}.</p>
-      ${investmentTables([["Exchange-traded funds", etfHoldings]], "First recorded purchase", "Fund", true)}
+      ${investmentControls("Fund name or ticker")}
+      <div data-holdings-results></div>
     </section>
     ${ventureInvestments()}`;
 }
 
 function setupInvestments() {
-  const industry = $("investmentIndustry");
-  const cards = $("public-equities").querySelectorAll("[data-industry]");
-  industry.addEventListener("change", () => {
-    for (const card of cards) {
-      card.hidden = Boolean(industry.value && card.dataset.industry !== industry.value);
-    }
-  });
+  setupHoldingsExplorer($("public-equities"), Object.entries(investmentIndustries), "Company");
+  setupHoldingsExplorer($("etfs"), [["Exchange-traded funds", etfHoldings]], "Fund");
   renderIndiaInvestments();
   const tabs = [$("public-equities-tab"), $("etfs-tab"), $("venture-tab")];
 

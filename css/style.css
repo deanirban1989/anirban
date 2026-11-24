@@ -257,3 +257,25 @@ body .skip-link:focus {
   color: var(--ink);
 }
 .footer-socials a:hover { color: var(--teal); background: var(--soft); }
+
+.investment-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.investment-controls label { display: grid; gap: 5px; flex: 1 1 180px; min-width: 0; font-size: 14px; font-weight: 650; }
+.investment-controls input, .investment-controls select {
+  min-width: 0;
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+.holdings-status { margin: 12px 0; color: var(--muted); font-size: 14px; }
