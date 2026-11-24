@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Insert published articles
+      - name: Update published articles
         env:
           WRITER_KEY: ${{ secrets.SUPABASE_SNAPSHOT_WRITER_KEY }}
         run: |
@@ -26,12 +26,12 @@ jobs:
             headers: {
               apikey: process.env.WRITER_KEY,
               'Content-Type': 'application/json',
-              Prefer: 'resolution=ignore-duplicates'
+              Prefer: 'resolution=merge-duplicates'
             },
             body: JSON.stringify(rows),
             signal: AbortSignal.timeout(15000)
           }).then(response => {
-            console.log('Article insert HTTP status:', response.status);
+            console.log('Article update HTTP status:', response.status);
             if (!response.ok) process.exitCode = 1;
           }).catch(() => { process.exitCode = 1; });
           JS
