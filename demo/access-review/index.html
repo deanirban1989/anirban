@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Access Review Demo | Anirban De</title>
+  <meta name="description" content="Try a sample access review and see the audit evidence it generates.">
+  <link rel="canonical" href="https://anirbande.com/demo/access-review/">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/access-demo.css">
+  <script src="/js/script.js" defer></script>
+  <script src="/js/access-demo.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav shell" aria-label="Main navigation">
+      <a class="wordmark" href="/" aria-label="Anirban De home">AD<span>.</span></a>
+      <div class="detail-nav"><a href="/work/access-reviews/">Access reviews case study</a></div>
+    </nav>
+  </header>
+  <main class="shell main demo-main">
+    <header class="demo-intro">
+      <p class="kicker">grcOS interactive demo</p>
+      <h1>Run an access review</h1>
+      <p class="lead">You’re the application owner. Decide who still needs access and see what gets recorded for the audit.</p>
+      <p class="demo-sample">Uses sample people, permissions, and applications.</p>
+    </header>
+    <div class="demo-layout">
+      <section class="demo-card" aria-labelledby="review-title">
+        <div class="demo-review-header">
+          <h2 id="review-title" tabindex="-1">Review queue</h2>
+          <p id="review-progress" aria-live="polite"></p>
+        </div>
+        <div id="review-item"></div>
+        <div class="demo-actions" id="review-actions" hidden>
+          <button class="button-primary" type="button" data-decision="Keep access">Keep access</button>
+          <button class="button-secondary" type="button" data-decision="Remove access">Remove access</button>
+        </div>
+        <button type="button" class="button-secondary demo-reset" id="review-reset" hidden>Start over</button>
+      </section>
+      <section class="demo-card demo-evidence" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">Audit evidence</h2>
+        <p id="evidence-empty">A record will appear here after your first decision.</p>
+        <ol id="evidence-list"></ol>
+      </section>
+    </div>
+    <noscript><p>Enable JavaScript to try the demo.</p></noscript>
+  </main>
+  <footer class="site-footer" id="siteFooter"></footer>
+</body>
+</html>
