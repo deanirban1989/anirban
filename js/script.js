@@ -34,7 +34,7 @@
     </section>
     <section class="home-section">
       <div class="section-heading"><h2>My Views</h2>${link("/views/", "Read my views")}</div>
-      <p class="bio-summary">How I think about building security programs and evaluating investment ideas.</p>
+      <div class="work-card article-preview"><p class="kicker">Security</p><h2><a href="/views/?article=why-access-reviews-still-take-so-long">Why access reviews still take so long</a></h2><p>How to give application owners the context to decide who still needs access.</p></div>
     </section>`;
 }
 
@@ -476,29 +476,55 @@ function setupInvestments() {
   window.addEventListener("hashchange", showLinkedTab);
 }
 
-function views() {
-  return `
-    <header class="page-intro">
+const articleLinks = {
+  "why-access-reviews-still-take-so-long": ["/demo/access-review/", "Try the access review demo"],
+  "what-building-grcos-taught-me": ["https://grc-os.dev/", "Explore grcOS"]
+};
+
+async function loadViews() {
+  const library = $("articleLibrary");
+  try {
+    const response = await fetch("/api/views");
+    if (!response.ok) throw new Error("Article library unavailable.");
+    const articles = await response.json();
+    const slug = new URLSearchParams(window.location.search).get("article");
+    const articleUrl = article => "/views/?article=" + encodeURIComponent(article.slug);
+    const readTime = article => Math.max(1, Math.ceil(article.body.join(" ").split(/\s+/).length / 200));
+    if (slug) {
+      const article = articles.find(item => item.slug === slug);
+      if (!article) {
+        library.innerHTML = '<h1>Article unavailable</h1><a class="text-link" href="/views/">Browse My Views</a>';
+        return;
+      }
+      document.title = article.title + " | Anirban De";
+      const related = articleLinks[article.slug];
+      library.innerHTML = `<article class="reading article-reading">
+        <a class="text-link" href="/views/">All articles</a>
+        <p class="kicker">${esc(article.topic)} · ${readTime(article)} min read</p>
+        <h1>${esc(article.title)}</h1>
+        <p class="lead">${esc(article.summary)}</p>
+        ${article.body.map(paragraph => `<p>${esc(paragraph)}</p>`).join("")}
+        ${related ? `<a class="text-link" href="${esc(related[0])}">${esc(related[1])}</a>` : ""}
+      </article>`;
+      return;
+    }
+
+    library.innerHTML = `<header class="page-intro">
       <h1>My Views</h1>
-      <p class="lead">How I think about security and investing.</p>
-      <nav class="actions" aria-label="Topics">
-        <a class="button-secondary" href="#security">Security</a>
-        <a class="button-secondary" href="#investing">Investments</a>
-      </nav>
+      <p class="lead">Essays on security, building products, and investing.</p>
     </header>
-    <article class="reading view-essay" id="security">
-      <p class="kicker">Security</p>
-      <h2>Automate the work around the security decision</h2>
-      <p>In an access review, collecting entitlements, finding the right owner, and chasing evidence can take more time than deciding who needs access. I start by automating those steps so the reviewer can see who has access, what each permission allows, and why it was granted.</p>
-      <p>I measure whether the process improves by looking at owner time, how quickly removals get verified, and whether the evidence shows what actually happened.</p>
-      <a class="text-link" href="/work/access-reviews/">Read the access reviews case study</a>
-    </article>
-    <article class="reading view-essay" id="investing">
-      <p class="kicker">Investments</p>
-      <h2>A strong theme still needs a strong business</h2>
-      <p>When I look at cybersecurity or AI, I start with the buyer. What problem is urgent enough to fund? Who owns the budget? How much work does it take to get the product running?</p>
-      <p>I also look at where an idea fits in the portfolio. Several companies can depend on the same wave of spending. That shared exposure matters when deciding how much to put behind a thesis.</p>
-    </article>`;
+    <section class="article-list" aria-label="Published articles">
+      ${articles.map(article => `<article class="work-card article-preview" id="${esc(article.topic === "Investing" ? "investing" : article.topic.toLowerCase())}">
+        <p class="kicker">${esc(article.topic)} · ${readTime(article)} min read</p>
+        <h2><a href="${articleUrl(article)}">${esc(article.title)}</a></h2>
+        <p>${esc(article.summary)}</p>
+      </article>`).join("") || "<p>No articles are published yet.</p>"}
+    </section>`;
+    const topic = window.location.hash.slice(1);
+    if (topic) $(topic)?.scrollIntoView();
+  } catch {
+    library.innerHTML = "<h1>My Views</h1><p>The article library is temporarily unavailable. Please try again later.</p>";
+  }
 }
 
 function renderFooter(data) {
@@ -519,11 +545,8 @@ function renderFooter(data) {
     </div>`;
 }
 
-function init(d){renderFooter(d);if(!page)return;$("siteHeader").innerHTML='<nav class="site-nav shell"><a class="wordmark" href="/"><span class="monogram">AD</span><span class="brand-name">'+esc(d.name)+'</span></a><button id="menuToggle" class="menu-toggle" aria-controls="navItems" aria-label="Toggle navigation" aria-expanded="false">Menu</button><div class="nav-items" id="navItems">'+nav.map(([id,url,label])=>'<a '+(page===id?'aria-current="page"':'')+' href="'+url+'">'+label+'</a>').join("")+'</div></nav>';$("menuToggle").onclick=()=>{const open=$("navItems").classList.toggle("is-open");$("menuToggle").setAttribute("aria-expanded",String(open))};const exp=d.experience||[],ach=d.achievements||[];const link=(url,label,cls="text-link")=>'<a class="'+cls+'" href="'+url+'">'+label+'</a>';const intro=(kicker,title,desc)=>'<header class="page-intro"><p class="kicker">'+kicker+'</p><h1>'+title+'</h1><p class="lead">'+desc+'</p></header>';const job=j=>'<article class="career-row"><div><p class="eyeline">'+esc(j.date)+'</p><h2>'+esc(j.org)+'</h2><p class="job-role">'+esc(j.role)+'</p></div><ul>'+j.bullets.map(b=>'<li>'+esc(clean(b))+'</li>').join("")+'</ul></article>';const detailLink=a=>a.title.includes("Risk Central")?"/work/risk-central/":a.title.includes("access reviews")?"/work/access-reviews/":null;const card=a=>'<article class="work-card case-study"><p class="case-category">'+esc(a.category||"Selected work")+'</p><h2>'+esc(a.title)+'</h2><p class="case-status">'+esc(a.status||"")+'</p><div class="case-detail"><strong>The challenge</strong><p>'+esc(a.context||"")+'</p></div><div class="case-detail"><strong>What I did</strong><p>'+esc(a.action||"")+'</p></div><div class="case-detail"><strong>Outcome</strong><p>'+esc(a.impact||a.text||"")+'</p></div>'+(detailLink(a)?'<a class="text-link case-link" href="'+detailLink(a)+'">Read case study</a>':'')+'</article>';let out="";switch(page){case"home":out=home(d,link);break;case"about":out=intro("ABOUT ME","About Anirban De","I’m a founder, security leader, and investor based in the San Francisco Bay Area.")+'<section class="reading"><h2>What drives my work</h2><p>I founded <a class="text-link" href="https://grc-os.dev/">grcOS</a> to give security teams one place to run risk and compliance. My work at Replit and Uber has focused on turning enterprise security requirements into tools teams can use every day.</p><p>'+esc(clean(d.about))+'</p><p>I’ve spent more than 14 years working with teams that need to balance speed, security and trust. I enjoy translating technical challenges into clear decisions and building systems that make the right thing easier to do.</p><h2>How I approach problems</h2><p>Start with the people affected. Understand what is getting in their way. Build something useful, measure whether it helps, and keep improving it.</p>'+link("/work/","See examples of my work")+'</section>';break;case"work":out=intro("SELECTED WORK","Security","Case studies and outcomes from building security programs and software at Replit and Uber.")+'<section class="work-grid work-index">'+ach.map(card).join("")+'</section><section class="closing"><h2>Interested in building something better?</h2>'+link("#siteFooter","Let's connect","button-primary")+'</section>';break;case"career":out=intro("CAREER","Where I’ve worked.","My path has taken me from consulting to leading security programs and building tools that make them work better.");break;case"investments":out=investments();break;case"views":out=views();break;} $("pageContent").innerHTML=out;
+function init(d){renderFooter(d);if(!page)return;$("siteHeader").innerHTML='<nav class="site-nav shell"><a class="wordmark" href="/"><span class="monogram">AD</span><span class="brand-name">'+esc(d.name)+'</span></a><button id="menuToggle" class="menu-toggle" aria-controls="navItems" aria-label="Toggle navigation" aria-expanded="false">Menu</button><div class="nav-items" id="navItems">'+nav.map(([id,url,label])=>'<a '+(page===id?'aria-current="page"':'')+' href="'+url+'">'+label+'</a>').join("")+'</div></nav>';$("menuToggle").onclick=()=>{const open=$("navItems").classList.toggle("is-open");$("menuToggle").setAttribute("aria-expanded",String(open))};const exp=d.experience||[],ach=d.achievements||[];const link=(url,label,cls="text-link")=>'<a class="'+cls+'" href="'+url+'">'+label+'</a>';const intro=(kicker,title,desc)=>'<header class="page-intro"><p class="kicker">'+kicker+'</p><h1>'+title+'</h1><p class="lead">'+desc+'</p></header>';const job=j=>'<article class="career-row"><div><p class="eyeline">'+esc(j.date)+'</p><h2>'+esc(j.org)+'</h2><p class="job-role">'+esc(j.role)+'</p></div><ul>'+j.bullets.map(b=>'<li>'+esc(clean(b))+'</li>').join("")+'</ul></article>';const detailLink=a=>a.title.includes("Risk Central")?"/work/risk-central/":a.title.includes("access reviews")?"/work/access-reviews/":null;const card=a=>'<article class="work-card case-study"><p class="case-category">'+esc(a.category||"Selected work")+'</p><h2>'+esc(a.title)+'</h2><p class="case-status">'+esc(a.status||"")+'</p><div class="case-detail"><strong>The challenge</strong><p>'+esc(a.context||"")+'</p></div><div class="case-detail"><strong>What I did</strong><p>'+esc(a.action||"")+'</p></div><div class="case-detail"><strong>Outcome</strong><p>'+esc(a.impact||a.text||"")+'</p></div>'+(detailLink(a)?'<a class="text-link case-link" href="'+detailLink(a)+'">Read case study</a>':'')+'</article>';let out="";switch(page){case"home":out=home(d,link);break;case"about":out=intro("ABOUT ME","About Anirban De","I’m a founder, security leader, and investor based in the San Francisco Bay Area.")+'<section class="reading"><h2>What drives my work</h2><p>I founded <a class="text-link" href="https://grc-os.dev/">grcOS</a> to give security teams one place to run risk and compliance. My work at Replit and Uber has focused on turning enterprise security requirements into tools teams can use every day.</p><p>'+esc(clean(d.about))+'</p><p>I’ve spent more than 14 years working with teams that need to balance speed, security and trust. I enjoy translating technical challenges into clear decisions and building systems that make the right thing easier to do.</p><h2>How I approach problems</h2><p>Start with the people affected. Understand what is getting in their way. Build something useful, measure whether it helps, and keep improving it.</p>'+link("/work/","See examples of my work")+'</section>';break;case"work":out=intro("SELECTED WORK","Security","Case studies and outcomes from building security programs and software at Replit and Uber.")+'<section class="work-grid work-index">'+ach.map(card).join("")+'</section><section class="closing"><h2>Interested in building something better?</h2>'+link("#siteFooter","Let's connect","button-primary")+'</section>';break;case"career":out=intro("CAREER","Where I’ve worked.","My path has taken me from consulting to leading security programs and building tools that make them work better.");break;case"investments":out=investments();break;case"views":out='<div id="articleLibrary"><p role="status">Loading articles…</p></div>';break;} $("pageContent").innerHTML=out;
   if (window.location.hash === "#siteFooter") $("siteFooter").scrollIntoView();
   if (page === "investments") setupInvestments();
-  if (page === "views") {
-    const topic = window.location.hash.slice(1);
-    if (topic) $(topic)?.scrollIntoView();
-  }
+  if (page === "views") loadViews();
 }fetch("/content.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Unable to load content");return r.json()}).then(init).catch(()=>{if($("pageContent"))$("pageContent").innerHTML='<section class="page-intro"><h1>Something went wrong.</h1><p class="lead">Please refresh the page to try again.</p></section>'})})();
