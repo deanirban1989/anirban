@@ -399,3 +399,37 @@ body[data-page="views"] .article-preview h2 { font-family: Georgia, "Times New R
 @media (max-width: 760px) {
   .demo-feature, .security-feature-grid, .industry-chart { grid-template-columns: 1fr; }
 }
+
+/* Bright editorial palette */
+:root {
+  --ink: #162653;
+  --muted: #445679;
+  --teal: #264dd9;
+  --line: #d7e4ff;
+  --paper: #fff;
+  --soft: #f1f7ff;
+}
+body[data-page] .site-header { background: #f0f6ff; }
+.wordmark .monogram { background: #3158e8; }
+body[data-page] .nav-items a:hover,
+body[data-page] .nav-items a[aria-current] { background: #dce8ff; }
+.button-primary:hover { background: #1d3db4; }
+.demo-feature, .investment-hero {
+  background: linear-gradient(120deg, #e2edff 0%, #edf2ff 52%, #d9fcf1 100%);
+  color: var(--ink);
+  border: 1px solid #c9dcff;
+}
+.demo-feature .kicker, .demo-feature-link { color: var(--teal); }
+.demo-feature p:not(.kicker), .investment-hero p, .investment-overview dt { color: var(--muted); }
+.demo-feature-link { border-color: #6186ed; }
+.demo-feature:hover .demo-feature-link { border-color: var(--teal); }
+.demo-cover { background: #ffffffd9; border: 1px solid #cfddfa; }
+.demo-cover .workflow-track span { background: #e7efff; }
+.investment-overview div { background: #ffffffb3; border: 1px solid #c9def6; }
+.investment-overview dd { color: #244bd0; }
+.access-cover, .article-feature { background: #e3edff; }
+.risk-cover { background: #d8f9ef; }
+.project-link:first-child { background: #e3edff; border-color: #c3d7ff; }
+.industry-meter span { background: linear-gradient(90deg, #3158eb, #078b82); }
+.industry-chart button[aria-pressed="true"],
+.investment-tabs button[aria-selected="true"] { background: #e0ebff; border-color: #afc8fc; }
