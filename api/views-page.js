@@ -6,18 +6,18 @@ const esc = value => String(value ?? "").replace(/[&<>"']/g, match => entities[m
 const articleUrl = slug => "/views/?article=" + encodeURIComponent(slug);
 const description = "Essays on security, building products, and investing.";
 const relatedLinks = new Map([
-  ["why-access-reviews-still-take-so-long", ["/demo/access-review/", "Try the access review demo"]],
+  ["why-access-reviews-still-take-so-long", ["https://grc-os.dev/", "Visit grcOS"]],
   ["what-building-grcos-taught-me", ["https://grc-os.dev/", "Explore grcOS"]],
 ]);
 
 function renderIndex(articles) {
   const topics = new Set();
-  const cards = articles.map(article => {
+  const cards = articles.map((article, index) => {
     const topic = article.topic === "Investing" ? "investing" : article.topic.toLowerCase();
     const anchor = topics.has(topic) ? "" : ` id="${esc(topic)}"`;
     topics.add(topic);
-    return `<article class="work-card article-preview"${anchor}>
-      <p class="kicker">${esc(article.topic)}</p>
+    return `<article class="work-card article-preview${index === 0 ? " article-feature" : ""}"${anchor}>
+      <p class="kicker">${index === 0 ? "Featured · " : ""}${esc(article.topic)}</p>
       <h2><a href="${esc(articleUrl(article.slug))}">${esc(article.title)}</a></h2>
       <p>${esc(article.summary)}</p>
     </article>`;
@@ -34,7 +34,7 @@ function renderArticle(article) {
     <p class="kicker">${esc(article.topic)} · ${Math.max(1, Math.ceil(words / 200))} min read</p>
     <h1>${esc(article.title)}</h1>
     <p class="lead">${esc(article.summary)}</p>
-    ${article.body.map(paragraph => `<p>${esc(paragraph)}</p>`).join("")}
+    ${article.body.map(paragraph => `<p>${esc(article.slug === "why-access-reviews-still-take-so-long" ? paragraph.replace(" The demo on this site shows what the decision and evidence can look like.", "") : paragraph)}</p>`).join("")}
     ${related ? `<a class="text-link" href="${esc(related[0])}">${esc(related[1])}</a>` : ""}
   </article>`;
 }

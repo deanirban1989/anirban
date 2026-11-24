@@ -346,6 +346,40 @@ async function loadInvestmentSnapshot() {
   }
 }
 
+function industryChartMarkup(groups) {
+  const counts = groups.map(([name, rows]) => [name, rows.length])
+    .sort(([a, countA], [b, countB]) => countB - countA || a.localeCompare(b));
+  const max = counts[0]?.[1] || 1;
+  return counts.map(([name, count]) =>
+    `<button type="button" data-industry="${esc(name)}" aria-pressed="false"><span>${esc(name)}</span><span class="industry-meter" aria-hidden="true"><span style="--bar-width:${count / max * 100}%"></span></span><strong>${count}</strong></button>`
+  ).join("");
+}
+
+function setupIndustryChart(panel) {
+  const chart = $("industryChart");
+  const filter = panel.querySelector("[data-holdings-industry]");
+
+  function syncSelection() {
+    for (const bar of chart.querySelectorAll("button")) {
+      bar.setAttribute("aria-pressed", String(bar.dataset.industry === filter.value));
+    }
+  }
+
+  chart.addEventListener("click", event => {
+    const bar = event.target.closest("button[data-industry]");
+    if (!bar) return;
+    filter.value = filter.value === bar.dataset.industry ? "" : bar.dataset.industry;
+    filter.dispatchEvent(new Event("change"));
+  });
+  filter.addEventListener("change", syncSelection);
+
+  return groups => {
+    const html = industryChartMarkup(groups);
+    if (chart.innerHTML !== html) chart.innerHTML = html;
+    syncSelection();
+  };
+}
+
 function setupInvestments() {
   const venture = $("earlyStageVenture");
   let ventureRequested = false;
@@ -365,12 +399,14 @@ function setupInvestments() {
     }
   });
   const refreshEquities = setupHoldingsExplorer($("public-equities"), Object.entries(investmentIndustries), "Company");
+  const refreshChart = setupIndustryChart($("public-equities"));
   const refreshEtfs = setupHoldingsExplorer($("etfs"), [["Exchange-traded funds", etfHoldings]], "Fund");
   renderIndiaInvestments();
   loadInvestmentSnapshot().then(loaded => {
     if (!loaded) return;
     const groups = Object.entries(investmentIndustries);
     refreshEquities(groups);
+    refreshChart(groups);
     refreshEtfs([["Exchange-traded funds", etfHoldings]]);
     $("investmentCompanyCount").textContent = groups.reduce((total, [, rows]) => total + rows.length, 0);
     $("investmentIndustryCount").textContent = groups.length;
