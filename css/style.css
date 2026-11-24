@@ -139,3 +139,14 @@ body .skip-link:focus {
   .outcome-grid { grid-template-columns: 1fr; }
   .outcome-grid > div, .outcome-grid > div:first-child { padding: 14px 0; border-left: 0; border-bottom: 1px solid var(--line); }
 }
+
+.bio-summary { max-width: 650px; color: var(--muted); }
+.identity-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.view-essay { padding: 36px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 85px; }
+.view-essay:last-child { margin-bottom: 55px; }
+.view-essay h2 { margin-top: 0; }
+.contact-options a { grid-template-columns: 140px minmax(0, 1fr); }
+.contact-options a:hover strong { color: var(--teal); }
+@media (max-width: 760px) {
+  .identity-grid, .contact-options a { grid-template-columns: 1fr; }
+}
