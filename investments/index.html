@@ -1,1 +1,93 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investments | Anirban De</title><meta name="description" content="Anirban De’s investment interests in cybersecurity, AI, and long-term investing."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://anirbande.com/investments/"><meta property="og:type" content="website"><meta property="og:title" content="Investments | Anirban De"><meta property="og:description" content="Anirban De’s investment interests in cybersecurity, AI, and long-term investing."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"></head><body data-page="investments"><a class="skip-link" href="#pageContent" style="position:absolute;left:-9999px">Skip to content</a><header id="siteHeader" class="site-header"></header><main class="main shell" id="pageContent"><p>Loading…</p></main><footer class="site-footer" id="siteFooter"></footer><script src="/js/script.js" defer></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investments | Anirban De</title><meta name="description" content="Anirban De’s investment interests in cybersecurity, AI, and long-term investing."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://anirbande.com/investments/"><meta property="og:type" content="website"><meta property="og:title" content="Investments | Anirban De"><meta property="og:description" content="Anirban De’s investment interests in cybersecurity, AI, and long-term investing."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"></head><body data-page="investments"><a class="skip-link" href="#pageContent" style="position:absolute;left:-9999px">Skip to content</a><header id="siteHeader" class="site-header"><nav class="site-nav shell"><a class="wordmark" href="/"><span class="monogram">AD</span><span class="brand-name">Anirban De</span></a><button id="menuToggle" class="menu-toggle" aria-controls="navItems" aria-label="Toggle navigation" aria-expanded="false">Menu</button><div class="nav-items" id="navItems"><a  href="/">Home</a><a  href="/work/">Security</a><a aria-current="page" href="/investments/">Investments</a><a  href="/views/">My Views</a><a  href="/about/">About</a><a  href="/career/">Career</a></div></nav></header><main class="main shell" id="pageContent">
+    <header class="investment-hero">
+      <div>
+        <h1>Investments</h1>
+        <p>My public equity holdings and the companies I have exposure to through venture funds.</p>
+        <p id="investmentRefreshedAt" hidden></p>
+      </div>
+      <dl class="investment-overview">
+        <div><dt>Public companies</dt><dd id="investmentCompanyCount">63</dd></div>
+        <div><dt>Industry groups</dt><dd id="investmentIndustryCount">14</dd></div>
+      </dl>
+    </header>
+    <div class="investment-tabs" role="tablist" aria-label="Investment categories">
+      <button type="button" role="tab" id="public-equities-tab" aria-selected="true" aria-controls="public-equities">Public equities</button>
+      <button type="button" role="tab" id="etfs-tab" aria-selected="false" aria-controls="etfs" tabindex="-1">ETFs</button>
+      <button type="button" role="tab" id="venture-tab" aria-selected="false" aria-controls="venture" tabindex="-1">Venture investments</button>
+    </div>
+    <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab">
+      <div class="investment-section-header">
+        <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of <span data-return-snapshot-date>November 24, 2026</span>.</p></div>
+      </div>
+
+    <div class="investment-controls">
+      <label>Search holdings
+        <input type="search" data-holdings-search placeholder="Company name">
+      </label>
+      <label>Industry
+        <select data-holdings-industry>
+          <option value="">All industries</option>
+          <option value="Aerospace &amp; space">Aerospace &amp; space</option><option value="Automotive &amp; robotics">Automotive &amp; robotics</option><option value="Cloud &amp; enterprise software">Cloud &amp; enterprise software</option><option value="Cybersecurity &amp; internet infrastructure">Cybersecurity &amp; internet infrastructure</option><option value="Digital assets">Digital assets</option><option value="Energy">Energy</option><option value="Financial services">Financial services</option><option value="Healthcare &amp; life sciences">Healthcare &amp; life sciences</option><option value="Industrial equipment &amp; transportation">Industrial equipment &amp; transportation</option><option value="Internet &amp; media">Internet &amp; media</option><option value="Metals, mining &amp; chemicals">Metals, mining &amp; chemicals</option><option value="Quantum computing">Quantum computing</option><option value="Retail &amp; consumer goods">Retail &amp; consumer goods</option><option value="Semiconductors &amp; hardware">Semiconductors &amp; hardware</option>
+        </select>
+      </label>
+      <label>Sort by
+        <select data-holdings-sort>
+          <option value="oldest">Oldest purchase</option>
+          <option value="newest">Newest purchase</option>
+          <option value="highest">Highest unrealized return</option>
+          <option value="lowest">Lowest unrealized return</option>
+        </select>
+      </label>
+    </div>
+    <p data-holdings-status class="holdings-status" role="status"></p>
+      <div class="investment-grid" data-holdings-results></div>
+      <section id="indiaInvestments"></section>
+    </section>
+    <section id="etfs" role="tabpanel" aria-labelledby="etfs-tab" class="public-equities" hidden>
+      <h2>ETFs</h2>
+      <p>Unrealized returns as of <span data-return-snapshot-date>November 24, 2026</span>.</p>
+
+    <div class="investment-controls">
+      <label>Search holdings
+        <input type="search" data-holdings-search placeholder="Fund name or ticker">
+      </label>
+
+      <label>Sort by
+        <select data-holdings-sort>
+          <option value="oldest">Oldest purchase</option>
+          <option value="newest">Newest purchase</option>
+          <option value="highest">Highest unrealized return</option>
+          <option value="lowest">Lowest unrealized return</option>
+        </select>
+      </label>
+    </div>
+    <p data-holdings-status class="holdings-status" role="status"></p>
+      <div data-holdings-results></div>
+    </section>
+
+    <section class="venture-investments" id="venture" role="tabpanel" aria-labelledby="venture-tab" hidden>
+      <h2>Venture investments</h2>
+      <p>Company exposure through two venture funds. Holdings reported as of September 30, 2026.</p>
+      <details>
+        <summary>Growth-stage companies (16)</summary>
+        <ul class="pill-list"><li>Airwallex</li><li>Boom Supersonic</li><li>Canva</li><li>Cognition</li><li>Crusoe</li><li>Databricks</li><li>ElevenLabs</li><li>Erebor</li><li>Mercor</li><li>OpenAI</li><li>Oura</li><li>Ramp</li><li>Revolut</li><li>SpaceX</li><li>Stripe</li><li>Whatnot</li></ul>
+        <p><a class="text-link" href="https://robinhood.com/us/en/stocks/RVI/">Growth-stage fund disclosure</a></p>
+      </details>
+      <details>
+        <summary>Early-stage companies</summary></details>
+    </section></main><footer class="site-footer" id="siteFooter">
+    <div class="shell footer-row">
+      <span>© 2026 Anirban De</span>
+      <nav class="footer-socials" aria-label="Social and contact links">
+
+          <a href="https://www.linkedin.com/in/anirban-d-10aa2836/" aria-label="LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v11M4 4v.1M10 20V9m0 5a5 5 0 0 1 10 0v6"/></svg>
+          </a>
+          <a href="https://github.com/deanirban1989" aria-label="GitHub" title="GitHub">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4 1-4-2-6-2m12 5v-4a3.5 3.5 0 0 0-1-2.7c3.3-.4 6.8-1.6 6.8-7.4A5.8 5.8 0 0 0 19.2 4c.2-1 .2-2-.3-3 0 0-1.2-.4-3.9 1.5a14 14 0 0 0-7 0C5.3.6 4.1 1 4.1 1c-.5 1-.5 2-.3 3A5.8 5.8 0 0 0 2.2 8c0 5.7 3.5 7 6.8 7.4A3.5 3.5 0 0 0 8 18v4"/></svg>
+          </a>
+          <a href="mailto:anirban.sync@gmail.com" aria-label="Email" title="Email">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </a>
+      </nav>
+    </div></footer><script src="/js/script.js" defer></script></body></html>
