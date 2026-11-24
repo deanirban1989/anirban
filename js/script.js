@@ -261,7 +261,7 @@ const earlyStageHoldings = {"Communication Services":[["Formative Intelligence I
 function ventureInvestments() {
   const growthCompanies = ["Airwallex", "Boom Supersonic", "Canva", "Cognition", "Crusoe", "Databricks", "ElevenLabs", "Erebor", "Mercor", "OpenAI", "Oura", "Ramp", "Revolut", "SpaceX", "Stripe", "Whatnot"];
   return `
-    <section class="venture-investments" id="venture" role="tabpanel" aria-labelledby="venture-tab">
+    <section class="venture-investments" id="venture" role="tabpanel" aria-labelledby="venture-tab" hidden>
       <h2>Venture investments</h2>
       <p>Company exposure through two venture funds. Holdings reported as of September 30, 2026.</p>
       <details>
@@ -351,12 +351,11 @@ function investments() {
       </dl>
     </header>
     <div class="investment-tabs" role="tablist" aria-label="Investment categories">
-      <button type="button" role="tab" id="venture-tab" aria-selected="true" aria-controls="venture">Venture investments</button>
-      <button type="button" role="tab" id="public-equities-tab" aria-selected="false" aria-controls="public-equities" tabindex="-1">Public equities</button>
+      <button type="button" role="tab" id="public-equities-tab" aria-selected="true" aria-controls="public-equities">Public equities</button>
       <button type="button" role="tab" id="etfs-tab" aria-selected="false" aria-controls="etfs" tabindex="-1">ETFs</button>
+      <button type="button" role="tab" id="venture-tab" aria-selected="false" aria-controls="venture" tabindex="-1">Venture investments</button>
     </div>
-    ${ventureInvestments()}
-    <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab" hidden>
+    <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab">
       <div class="investment-section-header">
         <div><h2>Public equities</h2><p>First recorded purchases, oldest first within each industry. Returns as of ${returnSnapshotDate}.</p></div>
         <label>Filter by industry
@@ -373,7 +372,8 @@ function investments() {
       <h2>ETFs</h2>
       <p>Unrealized returns as of ${returnSnapshotDate}.</p>
       ${investmentTables([["Exchange-traded funds", etfHoldings]], "First recorded purchase", "Fund", true)}
-    </section>`;
+    </section>
+    ${ventureInvestments()}`;
 }
 
 function setupInvestments() {
@@ -385,7 +385,7 @@ function setupInvestments() {
     }
   });
   renderIndiaInvestments();
-  const tabs = [$("venture-tab"), $("public-equities-tab"), $("etfs-tab")];
+  const tabs = [$("public-equities-tab"), $("etfs-tab"), $("venture-tab")];
 
   function selectTab(active) {
     for (const tab of tabs) {
