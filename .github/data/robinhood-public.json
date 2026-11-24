@@ -1,0 +1,422 @@
+{
+  "industries": {
+    "Aerospace & space": [
+      [
+        "AST SpaceMobile",
+        "2026-02-13"
+      ],
+      [
+        "Joby Aviation",
+        "2026-02-13"
+      ],
+      [
+        "New Horizon Aircraft",
+        "2026-05-12"
+      ],
+      [
+        "Space Exploration Technologies",
+        "2026-10-15"
+      ]
+    ],
+    "Automotive & robotics": [
+      [
+        "Lucid Group",
+        "2025-07-18"
+      ],
+      [
+        "Serve Robotics",
+        "2026-03-24"
+      ],
+      [
+        "Tesla",
+        "2025-05-27"
+      ]
+    ],
+    "Cloud & enterprise software": [
+      [
+        "Microsoft",
+        "2025-07-08"
+      ],
+      [
+        "Nutanix",
+        "2025-08-07"
+      ],
+      [
+        "ServiceNow",
+        "2025-05-30"
+      ],
+      [
+        "Shopify",
+        "2026-07-08"
+      ]
+    ],
+    "Cybersecurity & internet infrastructure": [
+      [
+        "Cloudflare",
+        "2025-05-30"
+      ],
+      [
+        "Crowdstrike Holdings",
+        "2025-05-30"
+      ],
+      [
+        "Verisign",
+        "2026-04-20"
+      ]
+    ],
+    "Digital assets": [
+      [
+        "Cleanspark",
+        "2025-10-16"
+      ]
+    ],
+    "Energy": [
+      [
+        "Bloom Energy",
+        "2026-10-13"
+      ],
+      [
+        "Chevron",
+        "2026-01-21"
+      ],
+      [
+        "Diamondback Energy",
+        "2026-05-11"
+      ],
+      [
+        "Eagle Nuclear Energy",
+        "2026-03-04"
+      ],
+      [
+        "EOG Resources",
+        "2026-09-15"
+      ]
+    ],
+    "Financial services": [
+      [
+        "Progressive",
+        "2025-05-30"
+      ],
+      [
+        "Visa",
+        "2025-05-30"
+      ]
+    ],
+    "Healthcare & life sciences": [
+      [
+        "Abbvie",
+        "2025-05-30"
+      ],
+      [
+        "Gilead Sciences",
+        "2025-05-30"
+      ],
+      [
+        "Intuitive Surgical",
+        "2025-05-30"
+      ],
+      [
+        "Johnson & Johnson",
+        "2025-07-08"
+      ],
+      [
+        "Lilly(Eli) & Co",
+        "2025-10-08"
+      ],
+      [
+        "Merck & Co",
+        "2026-01-21"
+      ],
+      [
+        "Neurocrine Biosciences",
+        "2025-10-08"
+      ],
+      [
+        "Vertex Pharmaceuticals",
+        "2026-09-22"
+      ]
+    ],
+    "Industrial equipment & transportation": [
+      [
+        "CSX",
+        "2026-04-29"
+      ],
+      [
+        "Eaton Corporation",
+        "2026-04-29"
+      ],
+      [
+        "Flowserve",
+        "2026-02-17"
+      ],
+      [
+        "Trane Technologies",
+        "2026-09-15"
+      ]
+    ],
+    "Internet & media": [
+      [
+        "Alphabet",
+        "2025-06-06"
+      ],
+      [
+        "Meta Platforms",
+        "2025-05-30"
+      ],
+      [
+        "Netflix",
+        "2025-05-30"
+      ],
+      [
+        "Reddit",
+        "2026-11-03"
+      ],
+      [
+        "Spotify Technology",
+        "2025-05-30"
+      ]
+    ],
+    "Metals, mining & chemicals": [
+      [
+        "Cleveland-Cliffs",
+        "2026-04-29"
+      ],
+      [
+        "Ecolab",
+        "2026-06-08"
+      ],
+      [
+        "Freeport-McMoRan",
+        "2026-04-14"
+      ],
+      [
+        "Linde",
+        "2026-03-20"
+      ],
+      [
+        "Rare Earths Americas",
+        "2026-05-12"
+      ]
+    ],
+    "Quantum computing": [
+      [
+        "IonQ",
+        "2026-03-24"
+      ],
+      [
+        "Quantinuum",
+        "2026-06-08"
+      ]
+    ],
+    "Retail & consumer goods": [
+      [
+        "Amazon.com",
+        "2025-07-08"
+      ],
+      [
+        "Colgate-Palmolive",
+        "2026-06-11"
+      ],
+      [
+        "Costco Wholesale",
+        "2025-05-30"
+      ],
+      [
+        "Gap",
+        "2025-05-30"
+      ]
+    ],
+    "Semiconductors & hardware": [
+      [
+        "Advanced Micro Devices",
+        "2026-07-08"
+      ],
+      [
+        "Ambarella",
+        "2026-06-08"
+      ],
+      [
+        "Apple",
+        "2025-05-30"
+      ],
+      [
+        "Broadcom",
+        "2025-05-30"
+      ],
+      [
+        "Cadence Design Systems",
+        "2026-04-20"
+      ],
+      [
+        "Coherent",
+        "2026-04-10"
+      ],
+      [
+        "Credo Technology Group Holding",
+        "2026-04-10"
+      ],
+      [
+        "Entegris",
+        "2026-06-18"
+      ],
+      [
+        "Lam Research",
+        "2025-07-08"
+      ],
+      [
+        "NVIDIA",
+        "2025-05-30"
+      ],
+      [
+        "Qualcomm",
+        "2025-07-08"
+      ],
+      [
+        "SEALSQ",
+        "2026-05-27"
+      ],
+      [
+        "Taiwan Semiconductor Manufacturing",
+        "2026-11-03"
+      ]
+    ]
+  },
+  "etfs": [
+    [
+      "Vanguard S&P 500 ETF (VOO)",
+      "2026-02-25"
+    ],
+    [
+      "Invesco QQQ Trust Series 1 (QQQ)",
+      "2024-10-02"
+    ],
+    [
+      "Vanguard Information Technology ETF (VGT)",
+      "2024-10-02"
+    ],
+    [
+      "VanEck Semiconductor ETF (SMH)",
+      "2026-11-03"
+    ],
+    [
+      "iShares Core S&P 500 ETF (IVV)",
+      "2025-05-30"
+    ],
+    [
+      "iShares 0-3 Month Treasury Bond ETF (SGOV)",
+      "2025-05-30"
+    ],
+    [
+      "Xtrackers Harvest CSI 300 China A-Shares ETF (ASHR)",
+      "2026-05-26"
+    ],
+    [
+      "iShares Russell 2000 Index Fund (IWM)",
+      "2026-02-06"
+    ],
+    [
+      "WisdomTree Japan Hedged Equity Fund (DXJ)",
+      "2025-05-30"
+    ],
+    [
+      "IShares MSCI Emerging Markets ex China ETF (EMXC)",
+      "2026-02-23"
+    ],
+    [
+      "State Street SPDR EURO Stoxx 50 ETF (FEZ)",
+      "2025-05-30"
+    ],
+    [
+      "State Street SPDR S&P Aerospace & Defense ETF (XAR)",
+      "2025-07-08"
+    ],
+    [
+      "SPDR Gold Shares (GLD)",
+      "2026-08-24"
+    ],
+    [
+      "VanEck Rare Earth/Strategic Metals ETF (REMX)",
+      "2025-10-08"
+    ]
+  ],
+  "returns": {
+    "NVIDIA": -9.9,
+    "Alphabet": -23.6,
+    "Microsoft": 16.3,
+    "Tesla": 5.2,
+    "AST SpaceMobile": -63.5,
+    "New Horizon Aircraft": -65.7,
+    "SEALSQ": -73,
+    "Joby Aviation": -64.3,
+    "Cleanspark": -60.2,
+    "Eagle Nuclear Energy": -69.6,
+    "IonQ": -50,
+    "Lucid Group": -78.6,
+    "Meta Platforms": -7.1,
+    "Serve Robotics": -74.7,
+    "Rare Earths Americas": -84.9,
+    "Quantinuum": -25,
+    "Netflix": -13.6,
+    "Space Exploration Technologies": -12,
+    "Crowdstrike Holdings": -15.5,
+    "Reddit": -3.4,
+    "Broadcom": -7.9,
+    "Apple": 4.4,
+    "Amazon.com": -3,
+    "Colgate-Palmolive": 9,
+    "Lilly(Eli) & Co": 19.8,
+    "Costco Wholesale": 11,
+    "Ecolab": 11.2,
+    "Cloudflare": -10.6,
+    "Abbvie": 10.9,
+    "Eaton Corporation": -17.2,
+    "Chevron": -4.6,
+    "Diamondback Energy": -17.9,
+    "Verisign": 4.8,
+    "Credo Technology Group Holding": -18.9,
+    "Neurocrine Biosciences": -2.9,
+    "Flowserve": -2.7,
+    "Linde": 10.3,
+    "Visa": 9.3,
+    "Johnson & Johnson": -1,
+    "Gilead Sciences": 17.6,
+    "Advanced Micro Devices": -16.1,
+    "Vertex Pharmaceuticals": 4.4,
+    "Nutanix": -12.6,
+    "Qualcomm": -36.4,
+    "Progressive": 0.5,
+    "Spotify Technology": -4.1,
+    "Intuitive Surgical": -11.8,
+    "CSX": 2.4,
+    "Trane Technologies": -3.6,
+    "Shopify": 1.4,
+    "EOG Resources": -4.3,
+    "Coherent": -33.2,
+    "Entegris": -12,
+    "Lam Research": -34.2,
+    "ServiceNow": -28.9,
+    "Merck & Co": -6.2,
+    "Cadence Design Systems": -9.4,
+    "Ambarella": -14.1,
+    "Freeport-McMoRan": -27.7,
+    "Cleveland-Cliffs": -18.3,
+    "Gap": 3.4,
+    "Bloom Energy": -32.8,
+    "Taiwan Semiconductor Manufacturing": -11.4,
+    "Vanguard S&P 500 ETF (VOO)": 9.9,
+    "Invesco QQQ Trust Series 1 (QQQ)": -4.3,
+    "Vanguard Information Technology ETF (VGT)": 44.4,
+    "VanEck Semiconductor ETF (SMH)": -13.1,
+    "iShares Core S&P 500 ETF (IVV)": -6.9,
+    "iShares 0-3 Month Treasury Bond ETF (SGOV)": 0,
+    "Xtrackers Harvest CSI 300 China A-Shares ETF (ASHR)": -13.9,
+    "iShares Russell 2000 Index Fund (IWM)": -8.1,
+    "WisdomTree Japan Hedged Equity Fund (DXJ)": -5.3,
+    "IShares MSCI Emerging Markets ex China ETF (EMXC)": -13.1,
+    "State Street SPDR EURO Stoxx 50 ETF (FEZ)": -8,
+    "State Street SPDR S&P Aerospace & Defense ETF (XAR)": -19.7,
+    "SPDR Gold Shares (GLD)": -19.5,
+    "VanEck Rare Earth/Strategic Metals ETF (REMX)": -51.1
+  },
+  "valued_on": "2026-11-24"
+}
