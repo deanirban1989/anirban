@@ -12,7 +12,9 @@ const relatedLinks = new Map([
 
 function renderIndex(articles) {
   const topics = new Set();
-  const cards = articles.map((article, index) => {
+  const series = articles.filter(article => article.slug.startsWith("security-domain-"));
+  const essays = articles.filter(article => !article.slug.startsWith("security-domain-"));
+  const cards = essays.map((article, index) => {
     const topic = article.topic === "Investing" ? "investing" : article.topic.toLowerCase();
     const anchor = topics.has(topic) ? "" : ` id="${esc(topic)}"`;
     topics.add(topic);
@@ -23,18 +25,34 @@ function renderIndex(articles) {
     </article>`;
   }).join("");
   return `<header class="page-intro"><h1>My Views</h1><p class="lead">${description}</p></header>
-    <section class="article-list" aria-label="Published articles">${cards || "<p>No articles are published yet.</p>"}</section>`;
+    <section class="article-list" aria-label="Published articles">${cards || (series.length ? "" : "<p>No articles are published yet.</p>")}</section>
+    ${series.length ? `<section id="security-domains" class="domain-series" aria-labelledby="domain-series-title">
+      <h2 id="domain-series-title">Cybersecurity for startups</h2>
+      <p>How I’d build the first workflow in each security domain, from the trigger through verified closure.</p>
+      <div class="domain-series-grid">${series.map(article => `<article class="work-card article-preview">
+        <h3><a href="${esc(articleUrl(article.slug))}">${esc(article.title)}</a></h3>
+        <p>${esc(article.summary)}</p>
+      </article>`).join("")}</div>
+    </section>` : ""}`;
 }
 
 function renderArticle(article) {
   const related = relatedLinks.get(article.slug);
+  const domainArticle = article.slug.startsWith("security-domain-");
   const words = article.body.join(" ").trim().split(/\s+/).length;
   return `<article class="reading article-reading">
-    <a class="text-link" href="/views/">All articles</a>
+    <a class="text-link" href="${domainArticle ? "/views/#security-domains" : "/views/"}">${domainArticle ? "Cybersecurity for startups" : "All articles"}</a>
     <p class="kicker">${esc(article.topic)} · ${Math.max(1, Math.ceil(words / 200))} min read</p>
     <h1>${esc(article.title)}</h1>
     <p class="lead">${esc(article.summary)}</p>
-    ${article.body.map(paragraph => `<p>${esc(article.slug === "why-access-reviews-still-take-so-long" ? paragraph.replace(" The demo on this site shows what the decision and evidence can look like.", "") : paragraph)}</p>`).join("")}
+    ${article.body.map(paragraph => {
+      if (domainArticle && paragraph.startsWith("### ")) return `<h3>${esc(paragraph.slice(4))}</h3>`;
+      if (domainArticle && paragraph.startsWith("## ")) return `<h2>${esc(paragraph.slice(3))}</h2>`;
+      const copy = article.slug === "why-access-reviews-still-take-so-long"
+        ? paragraph.replace(" The demo on this site shows what the decision and evidence can look like.", "")
+        : paragraph;
+      return `<p>${esc(copy)}</p>`;
+    }).join("")}
     ${related ? `<a class="text-link" href="${esc(related[0])}">${esc(related[1])}</a>` : ""}
   </article>`;
 }
