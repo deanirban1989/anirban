@@ -6,7 +6,8 @@
       <p class="lead">I build security software, lead security programs, and invest with a long-term perspective.</p>
       <p class="bio-summary">I founded grcOS to make risk and compliance easier to run. At Replit, I build security automation for an AI developer platform. Before that, I led risk management and control assurance at Uber.</p>
       <div class="actions">
-        ${link("/about/", "More about me", "button-primary")}
+        ${link("/demo/access-review/", "Try the grcOS demo", "button-primary")}
+        ${link("/about/", "More about me", "button-secondary")}
         ${link("#siteFooter", "Get in touch", "button-secondary")}
       </div>
     </section>
@@ -16,7 +17,8 @@
         <article class="work-card project-link">
           <h3>Build</h3>
           <p>grcOS brings controls, risks, vendors, and exceptions into a single workspace.</p>
-          <a class="text-link" href="https://grc-os.dev/">Explore grcOS</a>
+          ${link("/demo/access-review/", "Try an access review")}
+          <a class="text-link" href="https://grc-os.dev/">Visit grcOS</a>
         </article>
         <article class="work-card project-link">
           <h3>Lead security</h3>
