@@ -309,3 +309,27 @@ body .skip-link:focus {
 @media (max-width: 620px) {
   .case-overview-grid { grid-template-columns: 1fr; }
 }
+
+/* Same-origin page transitions keep the desktop navigation in place. */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: page-fade-out 120ms ease-out both; }
+  ::view-transition-new(root) { animation: page-fade-in 160ms ease-out both; }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  body[data-page] .site-header { view-transition-name: portfolio-sidebar; }
+  ::view-transition-group(portfolio-sidebar),
+  ::view-transition-old(portfolio-sidebar),
+  ::view-transition-new(portfolio-sidebar) { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none; }
+}
+
+@keyframes page-fade-out { to { opacity: 0; } }
+@keyframes page-fade-in { from { opacity: 0; } }
