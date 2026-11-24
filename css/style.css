@@ -158,7 +158,7 @@ body .skip-link:focus {
 .investment-table td { white-space: nowrap; color: var(--muted); }
 
 .investment-table caption { padding: 0 0 10px; text-align: left; font-size: 1.2rem; font-weight: 700; }
-#indiaInvestments:not(:empty), #indiaInvestments + section { padding-top: 30px; }
+#indiaInvestments:not(:empty) { padding-top: 32px; }
 
 .venture-investments { padding-bottom: 50px; }
 .venture-investments details { border-top: 1px solid var(--line); padding: 16px 0; }
@@ -187,7 +187,7 @@ body .skip-link:focus {
 .investment-overview dt { color: #d5e1f7; font-size: 14px; }
 .investment-overview dd { margin: 0; font-size: 2rem; line-height: 1.15; font-weight: 750; font-variant-numeric: tabular-nums; }
 .public-equities, .venture-investments { scroll-margin-top: 85px; }
-#indiaInvestments + .public-equities { padding: 42px 0; }
+.public-equities { padding: 0 0 42px; }
 .investment-section-header { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 16px; margin-bottom: 22px; }
 .investment-section-header h2 { margin-bottom: 9px; }
 .investment-section-header p { margin: 0; color: var(--muted); }
@@ -217,17 +217,30 @@ body .skip-link:focus {
   .investment-hero { margin-top: 20px; }
 }
 
-@media (min-width: 1160px) {
-  body[data-page="investments"] #pageContent {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-    align-items: start;
-    gap: 24px;
-  }
-  .investment-hero, #indiaInvestments { grid-column: 1 / -1; }
-  .venture-investments { grid-column: 1; grid-row: 2; margin-top: 0 !important; }
-  #indiaInvestments { grid-row: 3; }
-  #indiaInvestments:empty { display: none; }
-  #indiaInvestments + .public-equities { grid-column: 2; grid-row: 2; padding-top: 0; }
-  .venture-investments .investment-grid, .public-equities .investment-grid { grid-template-columns: 1fr; }
+.investment-tabs {
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 24px 0;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--soft);
+}
+.investment-tabs button {
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+.investment-tabs button[aria-selected="true"] {
+  border-color: var(--line);
+  background: var(--paper);
+  color: var(--teal);
+  box-shadow: 0 1px 3px #16223812;
 }
