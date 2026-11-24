@@ -159,3 +159,9 @@ body .skip-link:focus {
 
 .investment-table caption { padding: 0 0 10px; text-align: left; font-size: 1.2rem; font-weight: 700; }
 #indiaInvestments:not(:empty), #indiaInvestments + section { padding-top: 30px; }
+
+.venture-investments { padding-bottom: 50px; }
+.venture-investments details { border-top: 1px solid var(--line); padding: 16px 0; }
+.venture-investments summary { cursor: pointer; font-weight: 650; }
+.venture-investments .pill-list { list-style: none; padding: 0; }
+.venture-investments .pill-list li { padding: 6px 10px; background: var(--soft); border-radius: 6px; }

@@ -130,7 +130,7 @@ const investmentIndustries = {
   ],
 };
 
-function investmentTables(groups) {
+function investmentTables(groups, dateHeading = "First recorded purchase") {
   const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
   return [...groups].sort(([a], [b]) => {
     if (a === "Industry unavailable") return 1;
@@ -147,7 +147,7 @@ function investmentTables(groups) {
     return `
       <table class="investment-table">
         <caption>${esc(industry)}</caption>
-        <thead><tr><th scope="col">Company</th><th scope="col">First recorded purchase</th></tr></thead>
+        <thead><tr><th scope="col">Company</th><th scope="col">${esc(dateHeading)}</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
   }).join("");
@@ -171,6 +171,27 @@ async function renderIndiaInvestments() {
   }
 }
 
+const earlyStageHoldings = {"Communication Services":[["Formative Intelligence Inc.","2026-06-07"],["Offworld Technologies Pte Ltd.","2026-08-19"]],"Consumer Discretionary":[["Anoria Inc.","2026-06-06"],["CatchBack Cards Incorporated","2026-03-19"]],"Consumer Staples":[["Bloomy Learning, Inc.","2026-09-09"]],"Energy":[["Voxel Energy Inc.","2026-04-10"]],"Financials":[["Agentcard Corporation","2026-09-02"],["Audun Inc.","2026-09-03"],["Financial Datasets, Inc.","2026-09-11"],["KelAI Tech, Inc.","2026-06-05"],["Klaimee Labs Inc.","2026-06-08"],["Lambda Systems, Inc.","2026-03-19"],["Luca IQ, Inc.","2026-09-01"],["PantaCapital, Inc. (d/b/a Panta Insurance Solutions)","2026-03-24"],["Rapidfolio Inc.","2026-09-09"],["Rex AI Inc.","2026-08-31"],["SpotPay, Inc.","2026-03-24"],["tash cards Inc.","2026-09-09"],["Trade Hobby, Inc.","2026-09-02"],["Unifold, Inc.","2026-03-23"]],"Health Care":[["Adialante, Inc.","2026-05-26"],["Allia Health, Inc.","2026-08-31"],["Avoca Systems Inc","2026-09-01"],["CellType Inc.","2026-03-20"],["Floracene, Inc.","2026-09-09"],["Lumius Imaging, Inc.","2026-06-06"],["Omnition Technologies, Inc.","2026-09-09"],["Opalite Health Inc.","2026-03-19"],["Prana AI Incorporated","2026-03-26"],["Prescience, Inc.","2026-08-27"],["Radley AI, Inc","2026-09-01"],["RonanRX Inc.","2026-09-09"],["Ruma, Inc.","2026-03-16"]],"Industrials":[["6thSense AI, Inc.","2026-09-01"],["Aerogen Systems, Inc.","2026-08-31"],["Apollo Atomics, Inc.","2026-05-20"],["Applied Electrodynamics, Inc.","2026-09-09"],["Aseon Labs, Inc.","2026-05-23"],["AxionOrbital Space Inc.","2026-03-26"],["Cosmic Robotics, Inc.","2026-09-01"],["Eden Robotics Inc.","2026-06-08"],["Edgerun Industries, Inc.","2026-08-28"],["Impact Drones, Inc.","2026-09-11"],["Isengard Industries Inc.","2026-08-30"],["Ornadyne, Inc.","2026-06-09"],["SubVysion, Inc.","2026-08-29"],["Tenet Industries Inc.","2026-05-31"],["The General Aviation Company","2026-05-22"]],"Information Technology":[["Agency Tool Company","2026-08-27"],["Agentic Fabriq, Inc.","2026-03-16"],["Amboras Inc.","2026-06-06"],["Apex Flux Inc.","2026-03-16"],["Arga Labs Inc.","2026-06-08"],["Arzana, Inc.","2026-06-12"],["Asimov Robotics, Inc.","2026-03-27"],["Autumn AI, Inc.","2026-03-23"],["BioStack Platforms, Inc.","2026-06-02"],["Caretta Inc.","2026-03-23"],["Carnot AI, Inc. (d/b/a Jinba)","2026-03-31"],["Coasty Systems, Inc.","2026-09-17"],["Codag Inc.","2026-09-01"],["Complir, Inc.","2026-06-11"],["Context Dev Inc.","2026-08-28"],["Crosslayer Labs, Inc.","2026-03-18"],["Crow, Inc.","2026-03-23"],["Cumulus Compute Labs Corporation","2026-03-16"],["Daymi, Inc.","2026-03-18"],["DeepReach Inc","2026-08-20"],["Didit Identity, Inc.","2026-03-16"],["Dipole Labs, Inc.","2026-08-28"],["DroneTector Inc.","2026-06-18"],["EnactLabs, Inc.","2026-09-03"],["Expanse Compute, Inc.","2026-05-19"],["Flow Intel Platform Inc.","2026-08-29"],["Fractal Machine Research, Inc.","2026-08-31"],["Frontier Computing Corporation","2026-09-08"],["General Context Labs, Inc.","2026-09-18"],["Gud Labs, Inc.","2026-09-03"],["InkVell Inc. (d/b/a Synthetic Sciences)","2026-03-31"],["InstaAgent Inc.","2026-06-06"],["JigsawStack, Inc.","2026-06-08"],["Keyframe Labs, Inc.","2026-06-09"],["Laminar Run, Inc.","2026-06-08"],["LegalOS Inc.","2026-03-23"],["Luel Inc.","2026-03-27"],["Matforge, Inc.","2026-06-01"],["Maywood AI Inc.","2026-03-23"],["MirageDoodle, Inc. (d/b/a AutoSitu)","2026-03-25"],["OpenRelay Incorporated","2026-08-19"],["Oxus AI, Inc.","2026-03-23"],["Plena Inc.","2026-06-08"],["Praxis Services Inc","2026-09-11"],["Qomplement, Inc.","2026-06-08"],["ReasonBlocks Inc.","2026-06-07"],["Relay Innovations, Inc.","2026-06-09"],["Replicas Group Inc.","2026-06-10"],["RMJ Labs, Inc.","2026-06-13"],["Robocurve, Inc.","2026-08-29"],["Rudus, Inc.","2026-06-07"],["Samora AI, Inc.","2026-03-19"],["Sarah AI Inc.","2026-03-22"],["Second Stage Labs, Inc.","2026-05-18"],["SharedGenes, Inc.","2026-06-08"],["Shortwave Communications, Inc.","2026-07-01"],["Shotwell, Inc.","2026-06-10"],["Silmaril Security Inc.","2026-06-08"],["Smol Machines, Inc.","2026-06-10"],["Sparkley Inc.","2026-03-16"],["Speedtrain, Inc.","2026-03-25"],["Standard Machines Inc.","2026-09-03"],["Surtr Defense Systems, Inc.","2026-06-08"],["Terminal Use, Inc.","2026-03-18"],["Truffle Technologies Inc.","2026-09-09"],["Unilabs","2026-06-14"],["Veriad, Inc.","2026-03-19"],["Visibl Semiconductors, Inc.","2026-03-19"],["Voygr Tech, Inc.","2026-03-26"],["Waddle Laboratories Inc.","2026-09-09"],["Whitespace AI, Inc.","2026-09-02"],["Workable Solutions Inc.","2026-03-19"],["Limrun, Inc.","2026-06-04"]],"Materials":[["Mass Energy Company","2026-09-11"],["Molagri Inc.","2026-09-02"]]};
+
+function ventureInvestments() {
+  const growthCompanies = ["Airwallex", "Boom Supersonic", "Canva", "Cognition", "Crusoe", "Databricks", "ElevenLabs", "Erebor", "Mercor", "OpenAI", "Oura", "Ramp", "Revolut", "SpaceX", "Stripe", "Whatnot"];
+  return `
+    <section class="venture-investments">
+      <h2>Venture investments</h2>
+      <p>Company exposure through two venture funds. Holdings reported as of September 30, 2026.</p>
+      <details>
+        <summary>Growth-stage companies (${growthCompanies.length})</summary>
+        <ul class="pill-list">${growthCompanies.map(name => `<li>${esc(name)}</li>`).join("")}</ul>
+        <p><a class="text-link" href="https://robinhood.com/us/en/stocks/RVI/">Growth-stage fund disclosure</a></p>
+      </details>
+      <details>
+        <summary>Early-stage companies</summary>
+        <p><a class="text-link" href="https://www.sec.gov/Archives/edgar/data/2131040/000213104026000013/rvii-20260930.htm">Early-stage fund disclosure</a></p>
+        ${investmentTables(Object.entries(earlyStageHoldings), "Fund acquisition date")}
+      </details>
+    </section>`;
+}
+
 function investments() {
   return `
     <header class="page-intro">
@@ -179,9 +200,10 @@ function investments() {
     </header>
     <section id="indiaInvestments"></section>
     <section>
-      <h2>Robinhood</h2>
+      <h2>Public equities</h2>
       ${investmentTables(Object.entries(investmentIndustries))}
-    </section>`;
+    </section>
+    ${ventureInvestments()}`;
 }
 
 function views() {
