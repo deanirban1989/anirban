@@ -1,0 +1,22 @@
+name: Publish Robinhood snapshot to Supabase
+on:
+  push:
+    branches: [data/robinhood-snapshot]
+    paths: [.github/data/robinhood-public.json]
+permissions:
+  contents: read
+concurrency:
+  group: robinhood-snapshot-publish
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node .github/scripts/publish-investment-snapshot.mjs
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SNAPSHOT_WRITER_KEY: ${{ secrets.SUPABASE_SNAPSHOT_WRITER_KEY }}
