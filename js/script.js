@@ -130,7 +130,7 @@ const investmentIndustries = {
   ],
 };
 
-function investmentTables(groups, dateHeading = "First recorded purchase") {
+function investmentTables(groups, dateHeading = "First recorded purchase", nameHeading = "Company") {
   const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeZone: "UTC" });
   return [...groups].sort(([a], [b]) => {
     if (a === "Industry unavailable") return 1;
@@ -148,7 +148,7 @@ function investmentTables(groups, dateHeading = "First recorded purchase") {
       <div class="industry-card" data-industry="${esc(industry)}">
       <table class="investment-table">
         <caption>${esc(industry)} <span>${holdings.length}</span></caption>
-        <thead><tr><th scope="col">Company</th><th scope="col">${esc(dateHeading)}</th></tr></thead>
+        <thead><tr><th scope="col">${esc(nameHeading)}</th><th scope="col">${esc(dateHeading)}</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>`;
   }).join("");
@@ -193,6 +193,65 @@ function ventureInvestments() {
     </section>`;
 }
 
+const etfHoldings = [
+  [
+    "Vanguard S&P 500 ETF (VOO)",
+    "2026-02-25"
+  ],
+  [
+    "Invesco QQQ Trust Series 1 (QQQ)",
+    "2024-10-02"
+  ],
+  [
+    "Vanguard Information Technology ETF (VGT)",
+    "2024-10-02"
+  ],
+  [
+    "VanEck Semiconductor ETF (SMH)",
+    "2026-11-03"
+  ],
+  [
+    "iShares Core S&P 500 ETF (IVV)",
+    "2025-05-30"
+  ],
+  [
+    "iShares 0-3 Month Treasury Bond ETF (SGOV)",
+    "2025-05-30"
+  ],
+  [
+    "Xtrackers Harvest CSI 300 China A-Shares ETF (ASHR)",
+    "2026-05-26"
+  ],
+  [
+    "iShares Russell 2000 Index Fund (IWM)",
+    "2026-02-06"
+  ],
+  [
+    "WisdomTree Japan Hedged Equity Fund (DXJ)",
+    "2025-05-30"
+  ],
+  [
+    "IShares MSCI Emerging Markets ex China ETF (EMXC)",
+    "2026-02-23"
+  ],
+  [
+    "State Street SPDR EURO Stoxx 50 ETF (FEZ)",
+    "2025-05-30"
+  ],
+  [
+    "State Street SPDR S&P Aerospace & Defense ETF (XAR)",
+    "2025-07-08"
+  ],
+  [
+    "SPDR Gold Shares (GLD)",
+    "2026-08-24"
+  ],
+  [
+    "VanEck Rare Earth/Strategic Metals ETF (REMX)",
+    "2025-10-08"
+  ]
+];
+
 function investments() {
   const groups = Object.entries(investmentIndustries);
   const companyCount = groups.reduce((total, [, holdings]) => total + holdings.length, 0);
@@ -210,6 +269,7 @@ function investments() {
     <div class="investment-tabs" role="tablist" aria-label="Investment categories">
       <button type="button" role="tab" id="venture-tab" aria-selected="true" aria-controls="venture">Venture investments</button>
       <button type="button" role="tab" id="public-equities-tab" aria-selected="false" aria-controls="public-equities" tabindex="-1">Public equities</button>
+      <button type="button" role="tab" id="etfs-tab" aria-selected="false" aria-controls="etfs" tabindex="-1">ETFs</button>
     </div>
     ${ventureInvestments()}
     <section id="public-equities" class="public-equities" role="tabpanel" aria-labelledby="public-equities-tab" hidden>
@@ -224,6 +284,10 @@ function investments() {
       </div>
       <div class="investment-grid">${investmentTables(groups)}</div>
       <section id="indiaInvestments"></section>
+    </section>
+    <section id="etfs" role="tabpanel" aria-labelledby="etfs-tab" class="public-equities" hidden>
+      <h2>ETFs</h2>
+      ${investmentTables([["Exchange-traded funds", etfHoldings]], "First recorded purchase", "Fund")}
     </section>`;
 }
 
@@ -236,7 +300,7 @@ function setupInvestments() {
     }
   });
   renderIndiaInvestments();
-  const tabs = [$("venture-tab"), $("public-equities-tab")];
+  const tabs = [$("venture-tab"), $("public-equities-tab"), $("etfs-tab")];
 
   function selectTab(active) {
     for (const tab of tabs) {
@@ -248,7 +312,7 @@ function setupInvestments() {
   }
 
   function showLinkedTab() {
-    selectTab(window.location.hash === "#public-equities" ? tabs[1] : tabs[0]);
+    selectTab(tabs.find(tab => "#" + tab.getAttribute("aria-controls") === window.location.hash) ?? tabs[0]);
   }
 
   function activate(tab) {
@@ -259,7 +323,12 @@ function setupInvestments() {
   for (const [index, tab] of tabs.entries()) {
     tab.addEventListener("click", () => activate(tab));
     tab.addEventListener("keydown", event => {
-      const next = { ArrowLeft: 1 - index, ArrowRight: 1 - index, Home: 0, End: 1 }[event.key];
+      const next = {
+        ArrowLeft: (index + tabs.length - 1) % tabs.length,
+        ArrowRight: (index + 1) % tabs.length,
+        Home: 0,
+        End: tabs.length - 1
+      }[event.key];
       if (next === undefined) return;
       event.preventDefault();
       tabs[next].focus();
